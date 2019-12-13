@@ -1,0 +1,54 @@
+<div nz-row>
+  <form nz-form [formGroup]="detailDisciplineForm" autocomplete="off">
+    <div nz-row>
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="studentId">Chọn học sinh</nz-form-label>
+        <nz-form-control nzErrorTip="Vui lòng chọn học sinh!">
+          <nz-select nzShowSearch nzAllowClear id="studentId" formControlName="studentId" nzPlaceHolder="Chọn học sinh">
+            <nz-option *ngFor="let item of studentList" 
+            nzLabel="{{item.code}}-{{item.name}}" nzValue="{{item.id}}">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="disciplineId">Chọn kỷ luật</nz-form-label>
+        <nz-form-control nzErrorTip="Vui lòng chọn học sinh!">
+          <nz-select nzShowSearch nzAllowClear id="disciplineId" formControlName="disciplineId"
+            nzPlaceHolder="Chọn kỷ luật">
+            <nz-option *ngFor="let item of disciplineList" nzLabel="{{item.description}}" nzValue="{{item.id}}">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="reason">Lý do</nz-form-label>
+        <nz-form-control nzErrorTip="Vui lòng nhập lý do!">
+          <input placeholder="Nhập lý do" type="text" nz-input formControlName="reason" id="reason" autofocus />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="punishment">Hình phạt</nz-form-label>
+        <nz-form-control nzErrorTip="Vui lòng nhập hình phạt!">
+          <input placeholder="Nhập hình phạt" type="text" nz-input formControlName="punishment" id="punishment"
+            autofocus />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="datePunish">Ngày kỷ lật</nz-form-label>
+        <nz-form-control nzErrorTip="Vui lòng chọn ngày kỷ lật!">
+          <input type="date" nz-input formControlName="datePunish" id="datePunish" autofocus />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </form>
+</div>
+<br />
+<div nz-row class="footer-drawer">
+  <button nz-button nzType="default" (click)="close()">
+    <i nz-icon nzType="close" nzTheme="outline"></i>Hủy
+  </button>
+  <button nz-button nzType="primary" (click)="saveChanges()" [nzLoading]="loadingSaveChanges">
+    <i nz-icon nzType="save" nzTheme="outline"></i>Lưu
+  </button>
+</div>

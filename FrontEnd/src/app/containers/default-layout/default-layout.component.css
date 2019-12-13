@@ -1,0 +1,59 @@
+.trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.trigger:hover {
+  color: #1890ff;
+}
+
+.logo-container {
+  height: 64px;
+  border-bottom: 1px solid #f0f2f5;
+  border-right: 1px solid #f0f2f5;
+}
+
+nz-header {
+  background: #fff;
+  padding: 0;
+}
+
+nz-content {
+  margin: 0 16px;
+  height: 100%;
+}
+
+nz-breadcrumb {
+  margin: 16px 0;
+}
+
+.inner-content {
+  padding: 24px;
+  background: #fff;
+  min-height: 360px;
+}
+
+nz-footer {
+  text-align: center;
+}
+
+#container {
+  height: 100%;
+}
+
+.text-logo {
+  font-family: 'Lobster', cursive !important;
+  padding-left: 5px;
+  font-size: 22px;
+  color: #0aa679;
+  margin-top: 14px;
+  position: absolute;
+  font-weight: bold;
+}
+
+nz-badge {
+  margin-right: 30px;
+}

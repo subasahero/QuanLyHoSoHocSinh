@@ -1,0 +1,42 @@
+<div nz-row style="height: 100%;">
+  <div id="background-logo" nz-col nzXs="24" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+  </div>
+  <div nz-col nzXs="24" nzSm="14" nzMd="14" nzLg="14" nzXl="14" style="height: 100%;padding: 0 40px;">
+    <div nz-row id="div-logo">
+      <img src="/assets/logo-1.png" alt="logo-1" style="max-width: 100%;">
+    </div>
+    <div nz-row id="div-title">
+      <h1>Đăng Nhập</h1>
+    </div>
+    <div nz-row id="div-login">
+      <form nz-form [formGroup]="loginForm" class="login-form">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input your username!">
+            <nz-input-group nzPrefixIcon="user">
+              <input type="text" nz-input formControlName="userName" placeholder="Username" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input your Password!">
+            <nz-input-group nzPrefixIcon="lock">
+              <input type="password" nz-input formControlName="password" placeholder="Password" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <label nz-checkbox formControlName="remember">
+              <span>Nhớ mật khẩu</span>
+            </label>
+            <a class="login-form-forgot" class="login-form-forgot">Quên mật khẩu</a>
+            <button nz-button class="login-form-button" (click)="saveChanges()" 
+            [nzLoading]="loadingSaveChanges" [nzType]="'primary'">Đăng nhập</button>
+            hoặc
+            <a>Đăng ký!</a>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+  </div>
+</div>

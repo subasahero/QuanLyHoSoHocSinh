@@ -1,0 +1,91 @@
+<nz-layout id="container">
+  <nz-sider nzTheme="light" nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+    <div class="logo-container">
+      <ng-container *ngIf="isCollapsed == false;else templateLogo">
+        <img src="assets/dhhp-logo.png" alt="logo-image" style="margin: 5px 0 0px 10px;">
+        <span class="text-logo">ĐH Hải Phòng</span>
+      </ng-container>
+      <ng-template #templateLogo>
+        <img src="assets/dhhp-logo.png" alt="logo-image" style="margin: 5px 15px;">
+      </ng-template>
+    </div>
+    <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <li nz-submenu nzTitle="Trường học" nzIcon="bank" [nzOpen]="true">
+        <ul>
+          <li nz-menu-item>
+            <a [routerLink]="['/truong-hoc/lop/danh-sach']">
+              Lớp
+            </a>
+          </li>
+          <li nz-menu-item>
+            <a [routerLink]="['/truong-hoc/hoc-sinh/danh-sach']">
+              Học Sinh
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzTitle="Khen Thưởng" nzIcon="trophy">
+        <ul>
+          <li nz-menu-item>
+            <a [routerLink]="['/truong-hoc/khen-thuong/danh-sach']">
+              Lập khen thưởng
+            </a>
+          </li>
+          <li nz-menu-item>
+            <a [routerLink]="['/chi-tiet/khen-thuong/danh-sach']">
+              DS khen thưởng
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzTitle="Kỷ luật" nzIcon="thunderbolt">
+        <ul>
+          <li nz-menu-item>
+            <a [routerLink]="['/truong-hoc/ky-luat/danh-sach']">
+              Lập kỷ luật
+            </a>
+          </li>
+          <li nz-menu-item>
+            <a [routerLink]="['/chi-tiet/ky-luat/danh-sach']">
+              DS kỷ luật
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li nz-menu-item nzIcon="bar-chart">
+        <a [routerLink]="['/bao-cao']">
+          <i nz-icon nzType="bar-chart" nzTheme="outline"></i>Báo cáo
+        </a>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout style="height: 100%;">
+    <nz-header>
+      <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+        (click)="isCollapsed = !isCollapsed"></i>
+      <div class="text-right" style="float: right;padding-right: 30px;">
+        <nz-badge nzDot>
+          <i nz-icon nzType="bell" nzTheme="outline" style="font-size: 20px"></i>
+        </nz-badge>
+        <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+          <nz-avatar nzIcon="user" nzSize="middle" style="background-color:#87d068;"></nz-avatar>
+        </a>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item (click)="profile()">
+              Thông tin
+            </li>
+            <li nz-menu-item (click)="logout()">
+              Đăng xuất
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+    </nz-header>
+    <nz-content style="margin-top: 30px;">
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

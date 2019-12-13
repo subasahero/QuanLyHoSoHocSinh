@@ -1,0 +1,27 @@
+<nz-card>
+  <div nz-row style="text-align: right;">
+    <form nz-form [nzLayout]="'inline'" [formGroup]="enrollmentForm">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Chưa chọn năm!">
+          <nz-year-picker formControlName="fromYear" nzPlaceHolder="Từ năm"></nz-year-picker>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Chưa chọn năm!">
+          <nz-year-picker formControlName="toYear" nzPlaceHolder="Đến năm"></nz-year-picker>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <button nz-button nzType="primary" style="margin-top: 4px !important;" (click)="saveChanges()"
+          nzShape="circle"><i nz-icon nzType="search"></i></button>
+      </nz-form-item>
+    </form>
+  </div>
+  <div nz-row>
+    <ejs-chart id="chart-container" [primaryXAxis]='primaryXAxis' [primaryYAxis]='primaryYAxis' [title]='title'>
+      <e-series-collection>
+        <e-series [dataSource]='chartData' type='Column' xName='year' yName='numberStudent' name='Học sinh'></e-series>
+      </e-series-collection>
+    </ejs-chart>
+  </div>
+</nz-card>
