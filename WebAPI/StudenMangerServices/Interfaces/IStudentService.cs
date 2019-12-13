@@ -1,4 +1,5 @@
-﻿using StudenMangerServices.ViewModel;
+﻿using Data.Enum;
+using StudenMangerServices.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,5 +20,7 @@ namespace StudenMangerServices.Interfaces
         Task<bool> CheckExistsRecordAsync(string studentCode);
         Task<bool> ChangeGradeAsync(ChangeGradeViewModel changeGradeViewModel);
         List<StudentFlowYearViewModel> GetStudentReportEnrollment(string FromYear, string ToYear);
+        Task<PagedList<StudentViewModel>> GetStudentByLevelPagingAsync(PagingParams pagingParams, LevelEnum levelEnum);
+        Task<List<StudentViewModel>> GetStudentByLevelAsync(LevelEnum levelEnum);
     }
 }

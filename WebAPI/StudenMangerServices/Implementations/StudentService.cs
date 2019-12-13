@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using Data;
 using Data.Entities;
+using Data.Enum;
 using Microsoft.EntityFrameworkCore;
 using StudenMangerServices.Interfaces;
 using StudenMangerServices.ViewModel;
@@ -141,6 +142,59 @@ namespace StudenMangerServices.Implementations
                                             .FirstOrDefaultAsync(x => x.Id == id);
             StudentViewModel result = _mapper.Map<StudentViewModel>(student);
             return result;
+        }
+
+        public async Task<List<StudentViewModel>> GetStudentByLevelAsync(LevelEnum levelEnum)
+        {
+            List<StudentViewModel> result = await (from s in _dataContext.Students
+                                                    join g in _dataContext.Grades on s.GradeId equals g.Id
+                                                    orderby s.Name
+                                                    select new StudentViewModel
+                                                    {
+                                                        Id = s.Id,
+                                                        GradeId = s.GradeId,
+                                                        Code = s.Code,
+                                                        Name = s.Name,
+                                                        Sex = s.Sex,
+                                                        Birthday = s.Birthday,
+                                                        BirthLocate = s.BirthLocate,
+                                                        Talent = s.Talent,
+                                                        DateGoShcool = s.DateGoShcool,
+                                                        CreatedDate = s.CreatedDate,
+                                                        ModifiedDate = s.ModifiedDate,
+                                                        Status = s.Status,
+                                                        GradeVM = _mapper.Map<GradeViewModel>(g)
+                                                    }).ToListAsync();
+            result = result.Where(x => x.GradeVM.levelEnum == levelEnum).ToList();
+            return result;
+        }
+
+        public async Task<PagedList<StudentViewModel>> GetStudentByLevelPagingAsync(PagingParams pagingParams, LevelEnum levelEnum)
+        {
+            IQueryable<StudentViewModel> query = from s in _dataContext.Students
+                                                 join g in _dataContext.Grades on s.GradeId equals g.Id
+                                                 select new StudentViewModel
+                                                 {
+                                                     Id = s.Id,
+                                                     GradeId = s.GradeId,
+                                                     Code = s.Code,
+                                                     Name = s.Name,
+                                                     Sex = s.Sex,
+                                                     Birthday = s.Birthday,
+                                                     BirthLocate = s.BirthLocate,
+                                                     Talent = s.Talent,
+                                                     DateGoShcool = s.DateGoShcool,
+                                                     Certificate = s.Certificate,
+                                                     GradeVM = _mapper.Map<GradeViewModel>(g),
+                                                     CreatedDate = s.CreatedDate,
+                                                     ModifiedDate = s.ModifiedDate,
+                                                     Status = s.Status
+                                                 };
+
+            query = query.Where(x => x.GradeVM.levelEnum == levelEnum);
+
+            return await PagedList<StudentViewModel>
+                .CreateAsync(query, pagingParams.PageNumber, pagingParams.PageSize);
         }
 
         public List<StudentFlowYearViewModel> GetStudentReportEnrollment(string FromYear, string ToYear)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Backend.Extension;
+using Data.Enum;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StudenMangerServices.Interfaces;
@@ -26,6 +27,13 @@ namespace Backend.Controllers
         public async Task<IActionResult> GetAll()
         {
             IList<StudentViewModel> result = await _studentService.GetAllAsync();
+            return Ok(result);
+        }
+
+        [HttpGet("GetStudentByLevel/{levelEnum}")]
+        public async Task<IActionResult> GetStudentByLevel(LevelEnum levelEnum)
+        {
+            List<StudentViewModel> result = await _studentService.GetStudentByLevelAsync(levelEnum);
             return Ok(result);
         }
 
@@ -57,6 +65,14 @@ namespace Backend.Controllers
         public async Task<IActionResult> GetAllPaging([FromQuery]PagingParams pagingParams)
         {
             PagedList<StudentViewModel> paged = await _studentService.GetAllPagingAsync(pagingParams);
+            Response.AddPagination(paged.CurrentPage, paged.PageSize, paged.TotalCount, paged.TotalPages);
+            return Ok(paged.Items);
+        }
+
+        [HttpGet("GetStudentByLevelPaging/{levelEnum}")]
+        public async Task<IActionResult> GetStudentByLevelPaging([FromQuery]PagingParams pagingParams, LevelEnum levelEnum)
+        {
+            PagedList<StudentViewModel> paged = await _studentService.GetStudentByLevelPagingAsync(pagingParams, levelEnum);
             Response.AddPagination(paged.CurrentPage, paged.PageSize, paged.TotalCount, paged.TotalPages);
             return Ok(paged.Items);
         }
