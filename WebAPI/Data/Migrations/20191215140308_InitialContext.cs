@@ -304,6 +304,35 @@ namespace Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "StudentScores",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    StudentId = table.Column<Guid>(nullable: false),
+                    SemesterOneLevelSix = table.Column<float>(nullable: false),
+                    SemesterTwoLevelSix = table.Column<float>(nullable: false),
+                    SemesterOneLevelSeven = table.Column<float>(nullable: false),
+                    SemesterTwoLevelSeven = table.Column<float>(nullable: false),
+                    SemesterOneLevelEight = table.Column<float>(nullable: false),
+                    SemesterTwoLevelEight = table.Column<float>(nullable: false),
+                    SemesterOneLevelNine = table.Column<float>(nullable: false),
+                    SemesterTwoLevelNine = table.Column<float>(nullable: false),
+                    CreatedDate = table.Column<string>(nullable: true),
+                    ModifiedDate = table.Column<string>(nullable: true),
+                    Status = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentScores", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StudentScores_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -364,6 +393,11 @@ namespace Data.Migrations
                 column: "GradeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_StudentScores_StudentId",
+                table: "StudentScores",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserRoles_RoleId",
                 table: "UserRoles",
                 column: "RoleId");
@@ -388,6 +422,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "DetailRewards");
+
+            migrationBuilder.DropTable(
+                name: "StudentScores");
 
             migrationBuilder.DropTable(
                 name: "UserRoles");

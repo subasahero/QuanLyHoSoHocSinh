@@ -27,5 +27,6 @@ namespace StudenMangerServices.ViewModel
         public bool? Status { get; set; }
 
         public GradeViewModel GradeVM { get; set; }
+        public StudentScoreViewModel StudentScoreVM { get; set; }
     }
 }

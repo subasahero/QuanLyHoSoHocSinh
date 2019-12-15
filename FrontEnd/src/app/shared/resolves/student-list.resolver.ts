@@ -3,7 +3,7 @@ import { Student } from '../models/student.model';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { StudentService } from '../services/student.service';
 import { ConfigConstant } from '../constants/config.constant';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 
@@ -14,7 +14,12 @@ export class StudentListResolver implements Resolve<PaginatedResult<Student[]>> 
 
     constructor(private studentService: StudentService) { }
 
-    resolve(route: ActivatedRouteSnapshot): Observable<PaginatedResult<Student[]>> {
-        return this.studentService.getAllPaging(this.pageNumber, this.pageSize);
+    resolve(route: ActivatedRouteSnapshot): Observable<any> {
+        return forkJoin([
+            this.studentService.GetStudentByLevelPaging(this.pageNumber, this.pageSize, '0'),
+            this.studentService.GetStudentByLevelPaging(this.pageNumber, this.pageSize, '1'),
+            this.studentService.GetStudentByLevelPaging(this.pageNumber, this.pageSize, '2'),
+            this.studentService.GetStudentByLevelPaging(this.pageNumber, this.pageSize, '3'),
+        ]);
     }
 }

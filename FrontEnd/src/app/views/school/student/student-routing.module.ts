@@ -2,6 +2,7 @@ import { StudentListResolver } from './../../../shared/resolves/student-list.res
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { StudentListComponent } from './student-list/student-list.component';
+import { StudentListSevenComponent } from './tab/student-list-seven/student-list-seven.component';
 
 const routes: Routes = [
     {
@@ -16,7 +17,7 @@ const routes: Routes = [
                 data: {
                     breadcrumb: 'Danh sách'
                 },
-                resolve: { 'student-list': StudentListResolver }
+                // resolve: { 'student-list': StudentListResolver }
             },
             {
                 path: '',
@@ -35,7 +36,7 @@ export class StudentRoutingModule {
     static components = [
         StudentListComponent
     ];
-    static resolvers = [
-        StudentListResolver
-    ];
+    // static resolvers = [
+    //     StudentListResolver
+    // ];
 }

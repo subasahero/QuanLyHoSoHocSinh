@@ -1,5 +1,6 @@
 import { Grade } from './grade.model';
 import { Level } from './level.model';
+import { StudentScore } from './student-score.model';
 export interface Student {
     id?: string;
     gradeId?: string;
@@ -9,9 +10,11 @@ export interface Student {
     birthday?: string;
     birthLocate?: string;
     talent?: string;
+    certificate?: string;
     dateGoShcool?: string;
     createdDate?: string;
     modifiedDate?: string;
     status?: boolean;
     gradeVM?: Grade;
+    studentScoreVM?: StudentScore;
 }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20191213100856_InitialContext")]
+    [Migration("20191215140308_InitialContext")]
     partial class InitialContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -209,6 +209,42 @@ namespace Data.Migrations
                     b.ToTable("Students");
                 });
 
+            modelBuilder.Entity("Data.Entities.StudentScore", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CreatedDate");
+
+                    b.Property<string>("ModifiedDate");
+
+                    b.Property<float>("SemesterOneLevelEight");
+
+                    b.Property<float>("SemesterOneLevelNine");
+
+                    b.Property<float>("SemesterOneLevelSeven");
+
+                    b.Property<float>("SemesterOneLevelSix");
+
+                    b.Property<float>("SemesterTwoLevelEight");
+
+                    b.Property<float>("SemesterTwoLevelNine");
+
+                    b.Property<float>("SemesterTwoLevelSeven");
+
+                    b.Property<float>("SemesterTwoLevelSix");
+
+                    b.Property<bool>("Status");
+
+                    b.Property<Guid>("StudentId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentScores");
+                });
+
             modelBuilder.Entity("Data.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -390,6 +426,14 @@ namespace Data.Migrations
                     b.HasOne("Data.Entities.Grade", "Grade")
                         .WithMany()
                         .HasForeignKey("GradeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Data.Entities.StudentScore", b =>
+                {
+                    b.HasOne("Data.Entities.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

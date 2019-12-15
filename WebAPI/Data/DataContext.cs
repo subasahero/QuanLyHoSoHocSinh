@@ -29,6 +29,7 @@ namespace Data
         public DbSet<Discipline> Disciplines { get; set; }
         public DbSet<DetailReward> DetailRewards { get; set; }
         public DbSet<DetailDiscipline> DetailDisciplines { get; set; }
+        public DbSet<StudentScore> StudentScores { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

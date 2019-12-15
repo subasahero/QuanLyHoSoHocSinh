@@ -51,7 +51,6 @@ export class GradeCreateEditModalComponent implements OnInit {
     }
 
     const grade: Grade = this.gradeForm.getRawValue();
-    console.log(grade);
     this.gradeService.getCheckExistsRecord(grade.name, grade.levelEnum).subscribe(
         (res: boolean) => {
         if (res === false) {
@@ -100,6 +99,5 @@ export class GradeCreateEditModalComponent implements OnInit {
   }
 
   levelIdChange(event) {
-    console.log(event);
   }
 }

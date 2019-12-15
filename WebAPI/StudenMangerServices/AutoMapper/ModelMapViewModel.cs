@@ -23,6 +23,7 @@ namespace StudenMangerServices.AutoMapper
             CreateMap<User, UserUpdationViewModel>();
             CreateMap<Role, RoleViewModel>();
             CreateMap<User, UserViewModel>();
+            CreateMap<StudentScore, StudentScoreViewModel>();
         }
     }
 }

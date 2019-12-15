@@ -14,6 +14,7 @@ import { NzModalRef } from 'ng-zorro-antd';
   styleUrls: ['./student-change-grade-modal.component.css']
 })
 export class StudentChangeGradeModalComponent implements OnInit {
+  @Input() levelEnum: any;
   @Input() studentsId: any[];
   gradeId: string;
   gradeList = [];
@@ -71,7 +72,7 @@ export class StudentChangeGradeModalComponent implements OnInit {
     this.gradeService.getAll().subscribe(
       (res: Grade[]) => {
         res.forEach((x: Grade)=> {
-          if(parseInt(x.levelEnum) < 4) {
+          if(parseInt(x.levelEnum) === this.levelEnum) {
             this.gradeList.push(x);
           }
         });

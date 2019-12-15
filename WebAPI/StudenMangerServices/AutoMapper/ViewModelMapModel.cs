@@ -41,6 +41,11 @@ namespace StudenMangerServices.AutoMapper
                 {
                     opt.MapFrom(src => src.Status ?? true);
                 });
+            CreateMap<StudentScoreViewModel, StudentScore>()
+                .ForMember(dest => dest.Status, opt =>
+                {
+                    opt.MapFrom(src => src.Status ?? true);
+                });
             CreateMap<UserViewModel, User>();
             CreateMap<UserRoleViewModel, UserRole>();
             CreateMap<RoleViewModel, Role>();

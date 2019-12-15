@@ -69,6 +69,37 @@ export class StudentService {
     );
   }
 
+  GetStudentByLevelPaging(page?: any, itemsPerPage?: any, levelEnum?: any, pagingParams?: PagingParams): Observable<PaginatedResult<Student[]>> {
+    const paginatedResult = new PaginatedResult<Student[]>();
+
+    let params = new HttpParams();
+
+    if (page != null && itemsPerPage != null) {
+      params = params.append('pageNumber', page);
+      params = params.append('pageSize', itemsPerPage);
+    }
+
+    if (pagingParams != null) {
+      params = params.append('keyword', pagingParams.keyword);
+      params = params.append('sortKey', pagingParams.sortKey);
+      params = params.append('sortValue', pagingParams.sortValue);
+      params = params.append('searchKey', pagingParams.searchKey);
+      params = params.append('searchValue', pagingParams.searchValue);
+      params = params.append('levelIdValue', pagingParams.levelIdValue);
+    }
+
+    return this.http.get<Student[]>(this.baseUrl + 'Student/GetStudentByLevelPaging/' + levelEnum, {observe: 'response', params})
+    .pipe(
+      map(response => {
+        paginatedResult.result = response.body;
+        if (response.headers.get('Pagination') != null) {
+          paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+        }
+        return paginatedResult;
+      })
+    );
+  }
+
   getDetail(id: any) {
     return this.http.get(this.baseUrl + 'Student/' + id);
   }

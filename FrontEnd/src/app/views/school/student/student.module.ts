@@ -4,10 +4,18 @@ import { CommonModule } from '@angular/common';
 import { StudentCreateEditModalComponent } from './modal/student-create-edit-modal/student-create-edit-modal.component';
 import { StudentRoutingModule } from './student-routing.module';
 import { StudentChangeGradeModalComponent } from './modal/student-change-grade-modal/student-change-grade-modal.component';
+import { StudentListEightComponent } from './tab/student-list-eight/student-list-eight.component';
+import { StudentListSixComponent } from './tab/student-list-six/student-list-six.component';
+import { StudentListSevenComponent } from './tab/student-list-seven/student-list-seven.component';
+import { StudentListNineComponent } from './tab/student-list-nine/student-list-nine.component';
 
 const APP_MODALS = [
   StudentCreateEditModalComponent,
-  StudentChangeGradeModalComponent
+  StudentChangeGradeModalComponent,
+  StudentListSixComponent,
+  StudentListSevenComponent,
+  StudentListEightComponent,
+  StudentListNineComponent,
 ];
 @NgModule({
   imports: [
@@ -19,7 +27,7 @@ const APP_MODALS = [
     StudentRoutingModule.components,
     APP_MODALS
   ],
-  providers: [StudentRoutingModule.resolvers],
+  providers: [],
   entryComponents: [APP_MODALS]
 })
 export class StudentModule { }

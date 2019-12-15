@@ -166,6 +166,7 @@ namespace StudenMangerServices.Implementations
                                                         GradeVM = _mapper.Map<GradeViewModel>(g)
                                                     }).ToListAsync();
             result = result.Where(x => x.GradeVM.levelEnum == levelEnum).ToList();
+
             return result;
         }
 
@@ -173,6 +174,8 @@ namespace StudenMangerServices.Implementations
         {
             IQueryable<StudentViewModel> query = from s in _dataContext.Students
                                                  join g in _dataContext.Grades on s.GradeId equals g.Id
+                                                 join c in _dataContext.StudentScores on s.Id equals c.StudentId into tmpStudentScores
+                                                 from c in tmpStudentScores.DefaultIfEmpty()
                                                  select new StudentViewModel
                                                  {
                                                      Id = s.Id,
@@ -182,16 +185,29 @@ namespace StudenMangerServices.Implementations
                                                      Sex = s.Sex,
                                                      Birthday = s.Birthday,
                                                      BirthLocate = s.BirthLocate,
-                                                     Talent = s.Talent,
+                                                     Talent = s.Talent ?? string.Empty,
                                                      DateGoShcool = s.DateGoShcool,
                                                      Certificate = s.Certificate,
                                                      GradeVM = _mapper.Map<GradeViewModel>(g),
+                                                     StudentScoreVM = _mapper.Map<StudentScoreViewModel>(c),
                                                      CreatedDate = s.CreatedDate,
                                                      ModifiedDate = s.ModifiedDate,
                                                      Status = s.Status
                                                  };
 
             query = query.Where(x => x.GradeVM.levelEnum == levelEnum);
+            if (!string.IsNullOrEmpty(pagingParams.Keyword))
+            {
+                string keyword = pagingParams.Keyword.ToUpper().ToTrim();
+
+                query = query.Where(
+                    x => x.Name.ToUpper().ToUnSign().ToTrim().Contains(keyword.ToUnSign()) ||
+                    x.Name.ToUpper().Contains(keyword) ||
+                    x.Code.ToUpper().ToUnSign().ToTrim().Contains(keyword.ToUnSign()) ||
+                    x.Code.ToUpper().Contains(keyword) ||
+                    x.GradeVM.Name.ToUpper().ToUnSign().ToTrim().Contains(keyword.ToUnSign()) ||
+                    x.GradeVM.Name.ToUpper().Contains(keyword));
+            }
 
             return await PagedList<StudentViewModel>
                 .CreateAsync(query, pagingParams.PageNumber, pagingParams.PageSize);
