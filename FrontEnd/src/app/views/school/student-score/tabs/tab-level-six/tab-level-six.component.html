@@ -1,3 +1,90 @@
-<p>
-  tab-level-six works!
-</p>
+<div nz-row style="margin-bottom: 10px;">
+  <div nz-row>
+    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12">
+      <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+        <input type="text" nz-input placeholder="Tìm kiếm..." #keyword (keyup.enter)="search(keyword.value)" />
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="search(keyword.value)">
+          <i nz-icon nzType="search"></i>
+        </button>
+      </ng-template>
+    </div>
+    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12" class="text-right">
+      <button nz-button nzType="primary" (click)="addNew()">
+        <i nz-icon nzType="plus" nzTheme="outline"></i> Thêm mới
+      </button>
+    </div>
+  </div>
+</div>
+
+<nz-table #table nzBordered [nzData]="dataSet" [nzLoading]="loading" [nzTotal]="pagination.totalItems"
+  [nzPageIndex]="pagination.currentPage" [(nzPageSize)]="pagination.itemsPerPage" [nzNoResult]="'Không có dữ liệu.'"
+  (nzPageIndexChange)="loadData()" (nzPageSizeChange)="loadData(true)" nzSize="middle" [nzShowTotal]="rangeTemplate">
+  <ng-template #rangeTemplate let-range="range" let-total>
+    {{range[0]}}-{{range[1]}} của {{total}} bản ghi
+  </ng-template>
+  <thead>
+    <tr>
+      <th rowspan="2">Tên</th>
+      <th rowspan="2">Mã SV</th>
+      <th colspan="2">Khối 6</th>
+      <th colspan="2">Khối 7</th>
+      <th colspan="2">Khối 8</th>
+      <th colspan="2">Khối 9</th>
+      <th rowspan="2">Thao tác</th>
+    </tr>
+    <tr>
+      <th>HK1</th>
+      <th>HK2</th>
+      <th>HK1</th>
+      <th>HK2</th>
+      <th>HK1</th>
+      <th>HK2</th>
+      <th>HK1</th>
+      <th>HK2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of table.data;let i = index">
+      <td>{{data.name}}</td>
+      <td>{{data.code}}</td>
+      <td>{{data.studentScoreVM?.semesterOneLevelSix}}</td>
+      <td>{{data.studentScoreVM?.semesterTwoLevelSix}}</td>
+      <td>{{data.studentScoreVM?.semesterOneLevelSeven}}</td>
+      <td>{{data.studentScoreVM?.semesterTwoLevelSeven}}</td>
+      <td>{{data.studentScoreVM?.semesterOneLevelEight}}</td>
+      <td>{{data.studentScoreVM?.semesterTwoLevelEight}}</td>
+      <td>{{data.studentScoreVM?.semesterOneLevelNine}}</td>
+      <td>{{data.studentScoreVM?.semesterTwoLevelNine}}</td>
+      <td>
+        <nz-button-group>
+          <ng-container *ngIf="data.studentScoreVM == null; else elseTemplate">
+            <button nz-button nzType="default" nz-tooltip nzTitle="Thêm mới bảng điểm" (click)="addNew(data)">
+              <i nz-icon nzType="plus" theme="outline"></i>
+            </button>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <button nz-button nzType="default" nz-tooltip nzTitle="Sửa" (click)="update(data)">
+              <i nz-icon nzType="edit" theme="outline"></i>
+            </button>
+          </ng-template>
+
+          <!-- <ng-container>
+            <button nz-button nzType="default" nz-tooltip nzTitle="Thêm mới bảng điểm" (click)="addNew(data)">
+              <i nz-icon nzType="plus" theme="outline"></i>
+            </button>
+          </ng-container> -->
+          <!-- <ng-container *ngIf="studentScoreVM != null">
+            <button nz-button nzType="default" nz-tooltip nzTitle="Sửa" (click)="update(data)">
+              <i nz-icon nzType="edit" theme="outline"></i>
+            </button>
+          </ng-container>
+          <button nz-button nzType="danger" nz-tooltip nzTitle="Xóa" (click)="delete(data.id)">
+            <i nz-icon nzType="delete" theme="outline"></i>
+          </button> -->
+        </nz-button-group>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
