@@ -9,6 +9,10 @@ const routes: Routes = [
         },
         children: [
             {
+                path: 'diem-hoc-sinh',
+                loadChildren: () => import('./student-score/student-score.module').then(m => m.StudentScoreModule)
+            },
+            {
                 path: 'hoc-sinh',
                 loadChildren: () => import('./student/student.module').then(m => m.StudentModule)
             },

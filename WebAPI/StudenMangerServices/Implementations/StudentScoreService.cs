@@ -20,9 +20,10 @@ namespace StudenMangerServices.Implementations
             _dataContext = dataContext;
             _mapper = mapper;
         }
-        public Task<bool> CheckExistsAsync(Guid id)
+        public async Task<bool> CheckExistsAsync(Guid id)
         {
-            throw new NotImplementedException();
+            StudentScoreViewModel result = await GetByIdAsync(id);
+            return result != null ? true : false;
         }
 
         public async Task<StudentScoreViewModel> CreateAsync(StudentScoreViewModel studentScoreViewModel)

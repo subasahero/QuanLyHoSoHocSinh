@@ -11,7 +11,7 @@ namespace StudenMangerServices.Interfaces
     {
         Task<StudentScoreViewModel> GetByIdAsync(Guid id);
         Task<StudentScoreViewModel> CreateAsync(StudentScoreViewModel studentScoreViewModel);
-        Task UpdateAsync(StudentScoreViewModel studentScoreViewModel)
+        Task UpdateAsync(StudentScoreViewModel studentScoreViewModel);
         Task DeleteAsync(Guid id);
         Task<bool> CheckExistsAsync(Guid id);
     }

@@ -29,13 +29,13 @@ export class StudentService {
     let params = new HttpParams();
     params = params.append('FromYear', fromYear);
     params = params.append('ToYear', toYear);
-    return this.http.get<ReportEnrollment[]>(this.baseUrl + 'Student/reportEnrollment', { observe: 'response', params})
-    .pipe(
-      map(response => {
-        listReportEnrollment = response.body;
-        return listReportEnrollment;
-      })
-    );
+    return this.http.get<ReportEnrollment[]>(this.baseUrl + 'Student/reportEnrollment', { observe: 'response', params })
+      .pipe(
+        map(response => {
+          listReportEnrollment = response.body;
+          return listReportEnrollment;
+        })
+      );
   }
 
   getAllPaging(page?: any, itemsPerPage?: any, pagingParams?: PagingParams): Observable<PaginatedResult<Student[]>> {
@@ -57,18 +57,19 @@ export class StudentService {
       params = params.append('levelIdValue', pagingParams.levelIdValue);
     }
 
-    return this.http.get<Student[]>(this.baseUrl + 'Student/getAllPaging', {observe: 'response', params})
-    .pipe(
-      map(response => {
-        paginatedResult.result = response.body;
-        if (response.headers.get('Pagination') != null) {
-          paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
-        }
-        return paginatedResult;
-      })
-    );
+    return this.http.get<Student[]>(this.baseUrl + 'Student/getAllPaging', { observe: 'response', params })
+      .pipe(
+        map(response => {
+          paginatedResult.result = response.body;
+          if (response.headers.get('Pagination') != null) {
+            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+          }
+          return paginatedResult;
+        })
+      );
   }
 
+  // tslint:disable-next-line: max-line-length
   GetStudentByLevelPaging(page?: any, itemsPerPage?: any, levelEnum?: any, pagingParams?: PagingParams): Observable<PaginatedResult<Student[]>> {
     const paginatedResult = new PaginatedResult<Student[]>();
 
@@ -88,16 +89,16 @@ export class StudentService {
       params = params.append('levelIdValue', pagingParams.levelIdValue);
     }
 
-    return this.http.get<Student[]>(this.baseUrl + 'Student/GetStudentByLevelPaging/' + levelEnum, {observe: 'response', params})
-    .pipe(
-      map(response => {
-        paginatedResult.result = response.body;
-        if (response.headers.get('Pagination') != null) {
-          paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
-        }
-        return paginatedResult;
-      })
-    );
+    return this.http.get<Student[]>(this.baseUrl + 'Student/GetStudentByLevelPaging/' + levelEnum, { observe: 'response', params })
+      .pipe(
+        map(response => {
+          paginatedResult.result = response.body;
+          if (response.headers.get('Pagination') != null) {
+            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+          }
+          return paginatedResult;
+        })
+      );
   }
 
   getDetail(id: any) {
