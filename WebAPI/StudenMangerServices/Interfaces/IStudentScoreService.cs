@@ -1,4 +1,5 @@
-﻿using StudenMangerServices.ViewModel;
+﻿using Data.Enum;
+using StudenMangerServices.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;

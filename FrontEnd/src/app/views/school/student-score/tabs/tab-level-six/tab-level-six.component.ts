@@ -1,3 +1,4 @@
+import { StudentScoreService } from './../../../../../shared/services/student-score.service.ts.service';
 import { ConfigConstant } from './../../../../../shared/constants/config.constant';
 import { ConfigMesageConstant } from './../../../../../shared/constants/configmessage.constant';
 import { Student } from './../../../../../shared/models/student.model';
@@ -9,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NzDrawerService, NzModalService } from 'ng-zorro-antd';
 import { AddEditStudentScoreModalComponent } from '../../modals/add-edit-student-score-modal/add-edit-student-score-modal.component';
+import { NextLevelStudentComponent } from '../../modals/add-edit-student-score-modal/next-level-student/next-level-student.component';
 @Component({
   selector: 'app-tab-level-six',
   templateUrl: './tab-level-six.component.html',
@@ -21,7 +23,7 @@ export class TabLevelSixComponent implements OnInit {
   loading = true;
   sortValue = null;
   sortKey = null;
-  pagination = {};
+  pagination = {} as Pagination;
   pagingParams: PagingParams = {
     keyword: '',
     sortKey: '',
@@ -35,7 +37,8 @@ export class TabLevelSixComponent implements OnInit {
     private route: ActivatedRoute,
     private notifyService: NotifyService,
     private drawerService: NzDrawerService,
-    private modalService: NzModalService
+    private modalService: NzModalService,
+    private studentScoreService: StudentScoreService
   ) { }
 
   ngOnInit() {
@@ -45,6 +48,7 @@ export class TabLevelSixComponent implements OnInit {
         this.loading = false;
         this.pagination = res.pagination;
         this.dataSet = res.result;
+        console.log(this.dataSet);
       }
     );
   }
@@ -71,7 +75,7 @@ export class TabLevelSixComponent implements OnInit {
 
   addNew(data: Student) {
     const drawerRef = this.drawerService.create({
-      nzTitle: 'Thêm mới học sinh',
+      nzTitle: 'Thêm mới bảng điểm',
       nzContent: AddEditStudentScoreModalComponent,
       nzWidth: 650,
       nzContentParams: {
@@ -87,7 +91,7 @@ export class TabLevelSixComponent implements OnInit {
 
   update(data: Student) {
     const drawerRef = this.drawerService.create({
-      nzTitle: 'Chỉnh sửa học sinh',
+      nzTitle: 'Cập nhật bảng điểm',
       nzContent: AddEditStudentScoreModalComponent,
       nzWidth: 650,
       nzContentParams: {
@@ -119,12 +123,34 @@ export class TabLevelSixComponent implements OnInit {
 
   delete(id: any) {
     this.notifyService.confirm('Bạn có chắc muốn xóa không?', () => {
-      this.studentService.delete(id).subscribe((res: boolean) => {
+      this.studentScoreService.delete(id).subscribe((res: boolean) => {
         if (res) {
           this.notifyService.success(ConfigMesageConstant.MESSAGE_DELETE_SUCCESS_MODAL);
           this.loadData();
         }
       });
     }, 'Đồng ý', 'Hủy bỏ', () => false);
+  }
+
+  nextLevel(data: Student) {
+    const listChangeStudent = [data.id];
+    const modal = this.modalService.create({
+      nzTitle: 'Lên lớp',
+      nzContent: NextLevelStudentComponent,
+      nzWidth: 450,
+      nzComponentParams: {
+        levelEnum: data.gradeVM.levelEnum,
+        studentsId: listChangeStudent
+      }
+    });
+
+    modal.afterClose.subscribe(
+      (result: boolean) => {
+        if (result) {
+          this.notifyService.success(ConfigMesageConstant.MESSAGE_CHANGE_GRADE_SUCCESS_MODAL);
+          this.loadData();
+        }
+      }
+    );
   }
 }

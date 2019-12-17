@@ -28,7 +28,7 @@ export class StudentListNineComponent implements OnInit {
   loading = true;
   sortValue = null;
   sortKey = null;
-  pagination = {};
+  pagination = {} as Pagination;
   pagingParams: PagingParams = {
     keyword: '',
     sortKey: '',

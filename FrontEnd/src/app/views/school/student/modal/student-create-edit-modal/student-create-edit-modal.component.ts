@@ -14,7 +14,7 @@ import { NzDrawerRef } from 'ng-zorro-antd';
   styleUrls: ['./student-create-edit-modal.component.css']
 })
 export class StudentCreateEditModalComponent implements OnInit {
-  @Input() levelEnum: any;                                                                                                   
+  @Input() levelEnum: any;
   @Input() student: Student;
   @Input() isAddNew: boolean;
   sexList = [{ value: 'Nam' }, { value: 'Nữ' }, { value: 'Khác' }];
@@ -97,13 +97,13 @@ export class StudentCreateEditModalComponent implements OnInit {
   getListGrade() {
     this.gradeService.getAll().subscribe(
       (res: Grade[]) => {
-        res.forEach((x: Grade)=> {
-          if(this.isAddNew === false){
-            if(parseInt(x.levelEnum) === this.levelEnum) {
+        res.forEach((x: Grade) => {
+          if (this.isAddNew === false) {
+            if ((+x.levelEnum) === this.levelEnum) {
               this.gradeList.push(x);
             }
-          }else{
-            if(parseInt(x.levelEnum) < 4) {
+          } else {
+            if ((+x.levelEnum) === 0) {
               this.gradeList.push(x);
             }
           }

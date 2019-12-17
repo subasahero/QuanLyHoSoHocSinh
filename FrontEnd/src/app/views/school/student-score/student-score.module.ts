@@ -7,9 +7,11 @@ import { TabLevelSevenComponent } from './tabs/tab-level-seven/tab-level-seven.c
 import { TabLevelEightComponent } from './tabs/tab-level-eight/tab-level-eight.component';
 import { AddEditStudentScoreModalComponent } from './modals/add-edit-student-score-modal/add-edit-student-score-modal.component';
 import { TabLevelNineComponent } from './tabs/tab-level-nine/tab-level-nine.component';
+import { NextLevelStudentComponent } from './modals/add-edit-student-score-modal/next-level-student/next-level-student.component';
 
 const APP_MODALS = [
   AddEditStudentScoreModalComponent,
+  NextLevelStudentComponent,
   TabLevelSixComponent,
   TabLevelSevenComponent,
   TabLevelEightComponent,

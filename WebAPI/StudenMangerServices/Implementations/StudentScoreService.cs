@@ -40,6 +40,19 @@ namespace StudenMangerServices.Implementations
             StudentScore studentScore = await _dataContext.StudentScores
                                             .AsNoTracking()
                                             .FirstOrDefaultAsync(x => x.Id == id);
+            Student oldStudent = await _dataContext.Students
+                                                .FirstOrDefaultAsync(x => x.Id == studentScore.StudentId);
+            Grade olGrade = await _dataContext.Grades
+                                            .AsNoTracking()
+                                            .FirstOrDefaultAsync(x => x.Id == oldStudent.GradeId);
+            if(olGrade.levelEnum != Data.Enum.LevelEnum.Level6)
+            {
+                Grade grade = await _dataContext.Grades
+                                                .AsNoTracking()
+                                                .FirstOrDefaultAsync(x => x.levelEnum == Data.Enum.LevelEnum.Level6);
+                oldStudent.GradeId = grade.Id;
+                await _dataContext.SaveChangesAsync();
+            }
             _dataContext.StudentScores.Remove(studentScore);
             await _dataContext.SaveChangesAsync();
         }

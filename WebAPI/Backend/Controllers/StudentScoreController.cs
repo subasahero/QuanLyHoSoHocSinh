@@ -46,6 +46,14 @@ namespace Backend.Controllers
             }
             try
             {
+                float[] levelSix = { studentScoreViewModel.SemesterOneLevelSix, studentScoreViewModel.SemesterTwoLevelSix };
+                float[] levelSeven = { studentScoreViewModel.SemesterOneLevelSeven, studentScoreViewModel.SemesterTwoLevelSeven };
+                float[] levelEight = { studentScoreViewModel.SemesterOneLevelEight, studentScoreViewModel.SemesterTwoLevelEight };
+                float[] levelNine = { studentScoreViewModel.SemesterOneLevelNine, studentScoreViewModel.SemesterTwoLevelNine };
+                studentScoreViewModel.AverageLevelSix = levelSix.Average();
+                studentScoreViewModel.AverageLevelSeven = levelSeven.Average();
+                studentScoreViewModel.AverageLevelEight = levelEight.Average();
+                studentScoreViewModel.AverageLevelNine = levelNine.Average();
                 StudentScoreViewModel result = await _studentScoreService.CreateAsync(studentScoreViewModel);
                 return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
             }
@@ -69,6 +77,14 @@ namespace Backend.Controllers
             }
             try
             {
+                float[] levelSix = { studentScoreViewModel.SemesterOneLevelSix, studentScoreViewModel.SemesterTwoLevelSix };
+                float[] levelSeven = { studentScoreViewModel.SemesterOneLevelSeven, studentScoreViewModel.SemesterTwoLevelSeven };
+                float[] levelEight = { studentScoreViewModel.SemesterOneLevelEight, studentScoreViewModel.SemesterTwoLevelEight };
+                float[] levelNine = { studentScoreViewModel.SemesterOneLevelNine, studentScoreViewModel.SemesterTwoLevelNine };
+                studentScoreViewModel.AverageLevelSix = levelSix.Average();
+                studentScoreViewModel.AverageLevelSeven = levelSeven.Average();
+                studentScoreViewModel.AverageLevelEight = levelEight.Average();
+                studentScoreViewModel.AverageLevelNine = levelNine.Average();
                 await _studentScoreService.UpdateAsync(studentScoreViewModel);
             }
             catch (Exception e)

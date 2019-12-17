@@ -17,6 +17,10 @@ namespace Data.Entities
         public float SemesterTwoLevelEight { get; set; }
         public float SemesterOneLevelNine { get; set; }
         public float SemesterTwoLevelNine { get; set; }
+        public float AverageLevelSix { get; set; }
+        public float AverageLevelSeven { get; set; }
+        public float AverageLevelEight { get; set; }
+        public float AverageLevelNine { get; set; }
         public string CreatedDate { get; set; }
         public string ModifiedDate { get; set; }
         public bool Status { get; set; }

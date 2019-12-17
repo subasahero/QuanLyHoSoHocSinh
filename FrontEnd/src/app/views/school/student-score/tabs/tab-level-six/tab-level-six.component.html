@@ -10,11 +10,6 @@
         </button>
       </ng-template>
     </div>
-    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12" class="text-right">
-      <button nz-button nzType="primary" (click)="addNew()">
-        <i nz-icon nzType="plus" nzTheme="outline"></i> Thêm mới
-      </button>
-    </div>
   </div>
 </div>
 
@@ -27,36 +22,58 @@
   <thead>
     <tr>
       <th rowspan="2">Tên</th>
-      <th rowspan="2">Mã SV</th>
-      <th colspan="2">Khối 6</th>
-      <th colspan="2">Khối 7</th>
-      <th colspan="2">Khối 8</th>
-      <th colspan="2">Khối 9</th>
+      <th rowspan="2">Mã HS</th>
+      <th rowspan="2">Lớp</th>
+      <th colspan="3">Khối 6</th>
+      <th colspan="3">Khối 7</th>
+      <th colspan="3">Khối 8</th>
+      <th colspan="3">Khối 9</th>
       <th rowspan="2">Thao tác</th>
     </tr>
     <tr>
       <th>HK1</th>
       <th>HK2</th>
+      <th>TBC</th>
       <th>HK1</th>
       <th>HK2</th>
+      <th>TBC</th>
       <th>HK1</th>
       <th>HK2</th>
+      <th>TBC</th>
       <th>HK1</th>
       <th>HK2</th>
+      <th>TBC</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let data of table.data;let i = index">
       <td>{{data.name}}</td>
       <td>{{data.code}}</td>
+      <td>{{data.gradeVM.name}}</td>
       <td>{{data.studentScoreVM?.semesterOneLevelSix}}</td>
       <td>{{data.studentScoreVM?.semesterTwoLevelSix}}</td>
+      <td class="averageStyle" [style.color]="data.studentScoreVM?.averageLevelSix > 4 || 
+      data.studentScoreVM?.averageLevelSix == 4 ? '#0aa679' : 'red'">
+        {{data.studentScoreVM?.averageLevelSix}}
+      </td>
       <td>{{data.studentScoreVM?.semesterOneLevelSeven}}</td>
       <td>{{data.studentScoreVM?.semesterTwoLevelSeven}}</td>
+      <td class="averageStyle" [style.color]="data.studentScoreVM?.averageLevelSeven > 4 || 
+      data.studentScoreVM?.averageLevelSix == 4 ? '#0aa679' : 'red'">
+        {{data.studentScoreVM?.averageLevelSeven}}
+      </td>
       <td>{{data.studentScoreVM?.semesterOneLevelEight}}</td>
       <td>{{data.studentScoreVM?.semesterTwoLevelEight}}</td>
+      <td class="averageStyle" [style.color]="data.studentScoreVM?.averageLevelEight > 4 || 
+      data.studentScoreVM?.averageLevelSix == 4 ? '#0aa679' : 'red'">
+        {{data.studentScoreVM?.averageLevelEight}}
+      </td>
       <td>{{data.studentScoreVM?.semesterOneLevelNine}}</td>
       <td>{{data.studentScoreVM?.semesterTwoLevelNine}}</td>
+      <td class="averageStyle" [style.color]="data.studentScoreVM?.averageLevelNine > 4 || 
+      data.studentScoreVM?.averageLevelSix == 4 ? '#0aa679' : 'red'">
+        {{data.studentScoreVM?.averageLevelNine}}
+      </td>
       <td>
         <nz-button-group>
           <ng-container *ngIf="data.studentScoreVM == null; else elseTemplate">
@@ -68,21 +85,15 @@
             <button nz-button nzType="default" nz-tooltip nzTitle="Sửa" (click)="update(data)">
               <i nz-icon nzType="edit" theme="outline"></i>
             </button>
-          </ng-template>
-
-          <!-- <ng-container>
-            <button nz-button nzType="default" nz-tooltip nzTitle="Thêm mới bảng điểm" (click)="addNew(data)">
-              <i nz-icon nzType="plus" theme="outline"></i>
+            <button nz-button nzType="danger" nz-tooltip nzTitle="Xóa" (click)="delete(data.studentScoreVM.id)">
+              <i nz-icon nzType="delete" theme="outline"></i>
             </button>
-          </ng-container> -->
-          <!-- <ng-container *ngIf="studentScoreVM != null">
-            <button nz-button nzType="default" nz-tooltip nzTitle="Sửa" (click)="update(data)">
-              <i nz-icon nzType="edit" theme="outline"></i>
+          </ng-template>
+          <ng-container *ngIf="data.studentScoreVM?.averageLevelSix > 4 || data.studentScoreVM?.averageLevelSix == 4">
+            <button nz-button nzType="default" nz-tooltip nzTitle="Lên lớp" (click)="nextLevel(data)">
+              <i nz-icon nzType="arrow-up" theme="outline"></i>
             </button>
           </ng-container>
-          <button nz-button nzType="danger" nz-tooltip nzTitle="Xóa" (click)="delete(data.id)">
-            <i nz-icon nzType="delete" theme="outline"></i>
-          </button> -->
         </nz-button-group>
       </td>
     </tr>

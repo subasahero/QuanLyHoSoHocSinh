@@ -30,9 +30,9 @@ export class DetailRewardCreateEditModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    const date = new Date();
     this.createForm();
     this.detailRewardForm.reset();
-    this.detailRewardForm.patchValue(this.detailReward);
     this.getRewardList();
     this.getStudentList();
   }
