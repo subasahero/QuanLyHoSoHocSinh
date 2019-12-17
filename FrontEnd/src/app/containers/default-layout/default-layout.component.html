@@ -10,7 +10,7 @@
       </ng-template>
     </div>
     <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzTitle="Trường học" nzIcon="bank" [nzOpen]="true">
+      <li nz-submenu nzTitle="Học sinh" nzIcon="bank" [nzOpen]="true">
         <ul>
           <li nz-menu-item>
             <a [routerLink]="['/truong-hoc/lop/danh-sach']">
@@ -25,6 +25,11 @@
           <li nz-menu-item>
             <a [routerLink]="['/truong-hoc/diem-hoc-sinh/danh-sach']">
               Điểm học sinh
+            </a>
+          </li>
+          <li nz-menu-item>
+            <a [routerLink]="['/truong-hoc/chung-chi-nghe/danh-sach']">
+              Chứng chỉ nghề
             </a>
           </li>
         </ul>

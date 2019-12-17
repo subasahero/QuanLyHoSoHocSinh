@@ -9,6 +9,11 @@ const routes: Routes = [
         },
         children: [
             {
+                path: 'chung-chi-nghe',
+                // tslint:disable-next-line: max-line-length
+                loadChildren: () => import('./certificate-vacational/certificate-vacational.module').then(m => m.CertificateVacationalModule)
+            },
+            {
                 path: 'diem-hoc-sinh',
                 loadChildren: () => import('./student-score/student-score.module').then(m => m.StudentScoreModule)
             },

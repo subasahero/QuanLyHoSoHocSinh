@@ -35,6 +35,9 @@ export class DetailRewardCreateEditModalComponent implements OnInit {
     this.detailRewardForm.reset();
     this.getRewardList();
     this.getStudentList();
+    if (this.isAddNew) {
+      this.detailRewardForm.get('dateReward').setValue(this.formatDate(new Date()));
+    }
   }
 
   saveChanges() {
@@ -90,7 +93,7 @@ export class DetailRewardCreateEditModalComponent implements OnInit {
     this.drawerRef.close();
   }
 
-  getStudentList(){
+  getStudentList() {
     this.studentService.getAll().subscribe(
       res => {
         this.studentList = res;
@@ -98,11 +101,22 @@ export class DetailRewardCreateEditModalComponent implements OnInit {
     );
   }
 
-  getRewardList(){
+  getRewardList() {
     this.rewardService.getAll().subscribe(
       res => {
         this.rewardList = res;
       }
     );
+  }
+
+  formatDate(date) {
+    let dd = date.getDate();
+    let mm = date.getMonth() + 1;
+    const yyyy = date.getFullYear();
+    if (dd < 10) { dd = '0' + dd; }
+    if (mm < 10) { mm = '0' + mm; }
+    // date = mm + '/' + dd + '/' + yyyy;
+    date = yyyy + '-' + mm + '-' + dd;
+    return date;
   }
 }
