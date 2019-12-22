@@ -1,3 +1,4 @@
+import { EnvService } from './../../env.service';
 import { PagingParams } from './../params/paging.param';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
@@ -11,8 +12,11 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class LevelsServiceService {
-  baseUrl = environment.apiUrl;
-  constructor(private http: HttpClient) { }
+  baseUrl = this.env.apiUrl;
+  constructor(
+    private http: HttpClient,
+    private env: EnvService
+    ) { }
 
   getAll() {
     return this.http.get(this.baseUrl + 'level');

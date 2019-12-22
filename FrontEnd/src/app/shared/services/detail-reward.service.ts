@@ -1,3 +1,4 @@
+import { EnvService } from './../../env.service';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -11,8 +12,11 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class DetailRewardService {
-  baseUrl = environment.apiUrl;
-  constructor(private http: HttpClient) { }
+  baseUrl = this.env.apiUrl;
+  constructor(
+    private http: HttpClient,
+    private env: EnvService
+    ) { }
 
   getAll() {
     return this.http.get(this.baseUrl + 'DetailReward');

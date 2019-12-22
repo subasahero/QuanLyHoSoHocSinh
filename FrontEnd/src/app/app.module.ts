@@ -12,6 +12,7 @@ import { registerLocaleData } from '@angular/common';
 import vi from '@angular/common/locales/vi';
 import { SharedModule } from './shared/modules/shared.module';
 import { LoginPageComponent } from './views/login/login-page/login-page.component';
+import { EnvServiceProvider } from './env.service.provider';
 registerLocaleData(vi);
 
 @NgModule({
@@ -29,7 +30,7 @@ registerLocaleData(vi);
     HttpClientModule,
     BrowserAnimationsModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: vi_VN }],
+  providers: [{ provide: NZ_I18N, useValue: vi_VN },EnvServiceProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
