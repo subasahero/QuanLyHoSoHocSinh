@@ -10,7 +10,7 @@ export interface Student {
     birthday?: string;
     birthLocate?: string;
     talent?: string;
-    certificate?: string;
+    certificateId?: string;
     dateGoShcool?: string;
     createdDate?: string;
     modifiedDate?: string;

@@ -15,11 +15,12 @@ namespace Data.Entities
         public string BirthLocate { get; set; }
         public string Talent { get; set; }
         public string DateGoShcool { get; set; }
-        public CertificateVacational Certificate { get; set; }
+        public Guid? CertificateId { get; set; }
         public string CreatedDate { get; set; }
         public string ModifiedDate { get; set; }
         public bool Status { get; set; }
 
         public virtual Grade Grade { get; set; }
+        public virtual Certificate Certificate { get; set; }
     }
 }

@@ -30,6 +30,7 @@ namespace Data
         public DbSet<DetailReward> DetailRewards { get; set; }
         public DbSet<DetailDiscipline> DetailDisciplines { get; set; }
         public DbSet<StudentScore> StudentScores { get; set; }
+        public DbSet<Certificate> Certificates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

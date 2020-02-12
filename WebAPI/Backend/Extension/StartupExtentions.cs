@@ -110,6 +110,7 @@ namespace Backend.Extension
             services.AddScoped<IDetailRewardService, DetailRewardService>();
             services.AddScoped<IDetailDisciplineService, DetailDisciplineService>();
             services.AddScoped<IStudentScoreService, StudentScoreService>();
+            services.AddScoped<ICertificateService, CertificateService>();
         }
 
         public static void AddConfigureIdentity(this IServiceCollection services)

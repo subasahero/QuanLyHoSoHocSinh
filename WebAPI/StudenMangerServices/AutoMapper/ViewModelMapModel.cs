@@ -51,7 +51,8 @@ namespace StudenMangerServices.AutoMapper
             CreateMap<RoleViewModel, Role>();
             CreateMap<UserSessionViewModel, User>();
             CreateMap<UserUpdationViewModel, User>();
-            
+            CreateMap<CertificateViewModel, Certificate>();
+
         }
     }
 }

@@ -1,3 +1,63 @@
-<p>
-  certificate-vacational-list works!
-</p>
+<div nz-row style="margin-bottom: 10px;">
+  <div nz-row>
+    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12">
+      <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+        <input type="text" nz-input placeholder="Tìm kiếm..." #keyword (keyup.enter)="search(keyword.value)" />
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="search(keyword.value)">
+          <i nz-icon nzType="search"></i>
+        </button>
+      </ng-template>
+    </div>
+    <!-- <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12" class="text-right">
+      <button nz-button nzType="primary" (click)="changeGrade()">
+        <i nz-icon nzType="retweet" nzTheme="outline"></i> Chuyển Lớp
+      </button>
+    </div> -->
+  </div>
+</div>
+
+<nz-table #table nzBordered [nzData]="dataSet" [nzLoading]="loading" [nzTotal]="pagination.totalItems"
+  [nzPageIndex]="pagination.currentPage" [(nzPageSize)]="pagination.itemsPerPage" [nzNoResult]="'Không có dữ liệu.'"
+  (nzPageIndexChange)="loadData()" (nzPageSizeChange)="loadData(true)" nzSize="middle" [nzShowTotal]="rangeTemplate">
+  <ng-template #rangeTemplate let-range="range" let-total>
+    {{range[0]}}-{{range[1]}} của {{total}} bản ghi
+  </ng-template>
+  <thead>
+    <tr>
+      <th>STT</th>
+      <th>Mã HS</th>
+      <th>Họ và tên</th>
+      <th>Giới tính</th>
+      <th>Lớp</th>
+      <th>Thao tác</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of table.data;let i = index">
+      <td>{{i + 1}}</td>
+      <td>{{data.code}}</td>
+      <td>{{data.name}}</td>
+      <td>{{data.sex}}</td>
+      <td>{{data.gradeVM.name}}</td>
+      <td>
+        <nz-button-group>
+          <ng-container *ngIf="data.certificateId === null; else elseTemplate">
+            <button nz-button nzType="default" nz-tooltip nzTitle="Thêm" (click)="addnew(data)">
+              <i nz-icon nzType="plus" theme="outline"></i>
+            </button>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <button nz-button nzType="default" nz-tooltip nzTitle="Sửa" (click)="update(data)">
+              <i nz-icon nzType="edit" theme="outline"></i>
+            </button>
+          </ng-template>
+          <button nz-button nzType="danger" nz-tooltip nzTitle="Xóa" (click)="delete(data.id)">
+            <i nz-icon nzType="delete" theme="outline"></i>
+          </button>
+        </nz-button-group>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
