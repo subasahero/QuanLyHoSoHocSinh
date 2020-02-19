@@ -100,6 +100,8 @@ namespace StudenMangerServices.Implementations
         {
             IQueryable<StudentViewModel> query = from s in _dataContext.Students
                                                  join g in _dataContext.Grades on s.GradeId equals g.Id
+                                                 join c in _dataContext.Certificates on s.Id equals c.StudentId into tmpCertificates
+                                                 from c in tmpCertificates.DefaultIfEmpty()
                                                  select new StudentViewModel
                                                  {
                                                      Id = s.Id,
@@ -111,8 +113,8 @@ namespace StudenMangerServices.Implementations
                                                      BirthLocate = s.BirthLocate,
                                                      Talent = s.Talent,
                                                      DateGoShcool = s.DateGoShcool,
-                                                     CertificateId = s.CertificateId.Value,
                                                      GradeVM = _mapper.Map<GradeViewModel>(g),
+                                                     CertificateVM = _mapper.Map<CertificateViewModel>(c),
                                                      CreatedDate = s.CreatedDate,
                                                      ModifiedDate = s.ModifiedDate,
                                                      Status = s.Status
@@ -148,7 +150,9 @@ namespace StudenMangerServices.Implementations
         {
             List<StudentViewModel> result = await (from s in _dataContext.Students
                                                     join g in _dataContext.Grades on s.GradeId equals g.Id
-                                                    orderby s.Name
+                                                   join c in _dataContext.Certificates on s.Id equals c.StudentId into tmpCertificates
+                                                   from c in tmpCertificates.DefaultIfEmpty()
+                                                   orderby s.Name
                                                     select new StudentViewModel
                                                     {
                                                         Id = s.Id,
@@ -163,7 +167,8 @@ namespace StudenMangerServices.Implementations
                                                         CreatedDate = s.CreatedDate,
                                                         ModifiedDate = s.ModifiedDate,
                                                         Status = s.Status,
-                                                        GradeVM = _mapper.Map<GradeViewModel>(g)
+                                                        GradeVM = _mapper.Map<GradeViewModel>(g),
+                                                        CertificateVM = _mapper.Map<CertificateViewModel>(c)
                                                     }).ToListAsync();
             result = result.Where(x => x.GradeVM.levelEnum == levelEnum).ToList();
 
@@ -176,6 +181,8 @@ namespace StudenMangerServices.Implementations
                                                  join g in _dataContext.Grades on s.GradeId equals g.Id
                                                  join c in _dataContext.StudentScores on s.Id equals c.StudentId into tmpStudentScores
                                                  from c in tmpStudentScores.DefaultIfEmpty()
+                                                 join cc in _dataContext.Certificates on s.Id equals cc.StudentId into tmpCertificates
+                                                 from cc in tmpCertificates.DefaultIfEmpty()
                                                  select new StudentViewModel
                                                  {
                                                      Id = s.Id,
@@ -187,9 +194,9 @@ namespace StudenMangerServices.Implementations
                                                      BirthLocate = s.BirthLocate,
                                                      Talent = s.Talent ?? string.Empty,
                                                      DateGoShcool = s.DateGoShcool,
-                                                     CertificateId = s.CertificateId.Value,
                                                      GradeVM = _mapper.Map<GradeViewModel>(g),
                                                      StudentScoreVM = _mapper.Map<StudentScoreViewModel>(c),
+                                                     CertificateVM = _mapper.Map<CertificateViewModel>(cc),
                                                      CreatedDate = s.CreatedDate,
                                                      ModifiedDate = s.ModifiedDate,
                                                      Status = s.Status

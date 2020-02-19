@@ -226,7 +226,6 @@ namespace Data.Migrations
                     BirthLocate = table.Column<string>(nullable: true),
                     Talent = table.Column<string>(nullable: true),
                     DateGoShcool = table.Column<string>(nullable: true),
-                    Certificate = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<string>(nullable: true),
                     ModifiedDate = table.Column<string>(nullable: true),
                     Status = table.Column<bool>(nullable: false)
@@ -238,6 +237,26 @@ namespace Data.Migrations
                         name: "FK_Students_Grades_GradeId",
                         column: x => x.GradeId,
                         principalTable: "Grades",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Certificates",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    StudentId = table.Column<Guid>(nullable: false),
+                    SubjectCareer = table.Column<string>(nullable: true),
+                    CertificateType = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Certificates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Certificates_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -318,6 +337,10 @@ namespace Data.Migrations
                     SemesterTwoLevelEight = table.Column<float>(nullable: false),
                     SemesterOneLevelNine = table.Column<float>(nullable: false),
                     SemesterTwoLevelNine = table.Column<float>(nullable: false),
+                    AverageLevelSix = table.Column<float>(nullable: false),
+                    AverageLevelSeven = table.Column<float>(nullable: false),
+                    AverageLevelEight = table.Column<float>(nullable: false),
+                    AverageLevelNine = table.Column<float>(nullable: false),
                     CreatedDate = table.Column<string>(nullable: true),
                     ModifiedDate = table.Column<string>(nullable: true),
                     Status = table.Column<bool>(nullable: false)
@@ -368,6 +391,12 @@ namespace Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Certificates_StudentId",
+                table: "Certificates",
+                column: "StudentId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DetailDisciplines_DisciplineId",
                 table: "DetailDisciplines",
                 column: "DisciplineId");
@@ -416,6 +445,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Certificates");
 
             migrationBuilder.DropTable(
                 name: "DetailDisciplines");

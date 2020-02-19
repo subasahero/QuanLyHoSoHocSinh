@@ -26,9 +26,14 @@ namespace Data.Migrations
 
                     b.Property<int>("CertificateType");
 
+                    b.Property<Guid>("StudentId");
+
                     b.Property<string>("SubjectCareer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StudentId")
+                        .IsUnique();
 
                     b.ToTable("Certificates");
                 });
@@ -194,8 +199,6 @@ namespace Data.Migrations
 
                     b.Property<string>("Birthday");
 
-                    b.Property<Guid?>("CertificateId");
-
                     b.Property<string>("Code");
 
                     b.Property<string>("CreatedDate");
@@ -215,8 +218,6 @@ namespace Data.Migrations
                     b.Property<string>("Talent");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CertificateId");
 
                     b.HasIndex("GradeId");
 
@@ -417,6 +418,14 @@ namespace Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Data.Entities.Certificate", b =>
+                {
+                    b.HasOne("Data.Entities.Student")
+                        .WithOne("Certificate")
+                        .HasForeignKey("Data.Entities.Certificate", "StudentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Data.Entities.DetailDiscipline", b =>
                 {
                     b.HasOne("Data.Entities.Discipline", "Discipline")
@@ -445,10 +454,6 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entities.Student", b =>
                 {
-                    b.HasOne("Data.Entities.Certificate", "Certificate")
-                        .WithMany()
-                        .HasForeignKey("CertificateId");
-
                     b.HasOne("Data.Entities.Grade", "Grade")
                         .WithMany()
                         .HasForeignKey("GradeId")

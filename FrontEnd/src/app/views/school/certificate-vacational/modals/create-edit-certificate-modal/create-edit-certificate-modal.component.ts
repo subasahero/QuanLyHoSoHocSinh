@@ -1,3 +1,4 @@
+import { Student } from './../../../../../shared/models/student.model';
 import { ConfigMesageConstant } from './../../../../../shared/constants/configmessage.constant';
 import { Certificate } from './../../../../../shared/models/certificate.model';
 import { CertificateService } from './../../../../../shared/services/certificate.service';
@@ -12,11 +13,22 @@ import { NzDrawerRef } from 'ng-zorro-antd';
   styleUrls: ['./create-edit-certificate-modal.component.css']
 })
 export class CreateEditCertificateModalComponent implements OnInit {
+  @Input() student: Student;
   @Input() certificate: Certificate;
   @Input() isAddNew: boolean;
   checkExistsRecord = true;
   certificateForm: FormGroup;
   loadingSaveChanges: boolean;
+  listCareer = [
+    { label: 'Nấu Ăn', value: '0' },
+    { label: 'Điện dân dụng', value: '1' },
+    { label: 'Thợ xây', value: '2' },
+  ];
+  listCertificateType = [
+    { label: 'Kém', value: '0' },
+    { label: 'Khá', value: '1' },
+    { label: 'Giỏi', value: '2' },
+  ];
   constructor(
     private fb: FormBuilder,
     private notify: NotifyService,
@@ -28,6 +40,19 @@ export class CreateEditCertificateModalComponent implements OnInit {
     this.createForm();
     this.certificateForm.reset();
     this.certificateForm.patchValue(this.certificate);
+    if (this.isAddNew) {
+      this.certificateForm.patchValue({
+        ...this.certificate,
+        studentId: this.student.id,
+        subjectCareer: 'Nấu Ăn',
+        certificateType: '2',
+      })
+    } else {
+      this.certificateForm.patchValue({
+        ...this.certificate,
+        certificateType: this.certificate.certificateType.toString(),
+      })
+    }
   }
 
   saveChanges() {
@@ -56,7 +81,7 @@ export class CreateEditCertificateModalComponent implements OnInit {
       }, _ => this.loadingSaveChanges = false);
     } else {
       // tslint:disable-next-line: no-shadowed-variable
-      this.certificateService.update(certificate).subscribe(( res: any) => {
+      this.certificateService.update(certificate).subscribe((res: any) => {
         if (res) {
           this.notify.success(ConfigMesageConstant.MESSAGE_UPADTE_SUCCESS_MODAL);
           this.close();
@@ -70,6 +95,7 @@ export class CreateEditCertificateModalComponent implements OnInit {
   createForm() {
     this.certificateForm = this.fb.group({
       id: [null],
+      studentId: [null],
       subjectCareer: [null, Validators.required],
       certificateType: [null, Validators.required],
     });

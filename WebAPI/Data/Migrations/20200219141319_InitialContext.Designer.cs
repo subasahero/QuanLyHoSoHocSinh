@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20191215140308_InitialContext")]
+    [Migration("20200219141319_InitialContext")]
     partial class InitialContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,25 @@ namespace Data.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Data.Entities.Certificate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CertificateType");
+
+                    b.Property<Guid>("StudentId");
+
+                    b.Property<string>("SubjectCareer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId")
+                        .IsUnique();
+
+                    b.ToTable("Certificates");
+                });
 
             modelBuilder.Entity("Data.Entities.DetailDiscipline", b =>
                 {
@@ -182,8 +201,6 @@ namespace Data.Migrations
 
                     b.Property<string>("Birthday");
 
-                    b.Property<int>("Certificate");
-
                     b.Property<string>("Code");
 
                     b.Property<string>("CreatedDate");
@@ -213,6 +230,14 @@ namespace Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<float>("AverageLevelEight");
+
+                    b.Property<float>("AverageLevelNine");
+
+                    b.Property<float>("AverageLevelSeven");
+
+                    b.Property<float>("AverageLevelSix");
 
                     b.Property<string>("CreatedDate");
 
@@ -393,6 +418,14 @@ namespace Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Data.Entities.Certificate", b =>
+                {
+                    b.HasOne("Data.Entities.Student")
+                        .WithOne("Certificate")
+                        .HasForeignKey("Data.Entities.Certificate", "StudentId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Data.Entities.DetailDiscipline", b =>

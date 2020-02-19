@@ -31,6 +31,8 @@
       <th>Họ và tên</th>
       <th>Giới tính</th>
       <th>Lớp</th>
+      <th>Nghề</th>
+      <th>Loại</th>
       <th>Thao tác</th>
     </tr>
   </thead>
@@ -41,9 +43,11 @@
       <td>{{data.name}}</td>
       <td>{{data.sex}}</td>
       <td>{{data.gradeVM.name}}</td>
+      <td>{{data.certificateVM?.subjectCareer}}</td>
+      <td>{{listCertificateType[data.certificateVM?.certificateType]?.label}}</td>
       <td>
         <nz-button-group>
-          <ng-container *ngIf="data.certificateId === null; else elseTemplate">
+          <ng-container *ngIf="data.certificateVM === null; else elseTemplate">
             <button nz-button nzType="default" nz-tooltip nzTitle="Thêm" (click)="addnew(data)">
               <i nz-icon nzType="plus" theme="outline"></i>
             </button>

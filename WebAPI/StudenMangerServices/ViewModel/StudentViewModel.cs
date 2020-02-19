@@ -21,12 +21,12 @@ namespace StudenMangerServices.ViewModel
         public string BirthLocate { get; set; }
         public string Talent { get; set; }
         public string DateGoShcool { get; set; }
-        public Guid? CertificateId { get; set; }
         public string CreatedDate { get; set; }
         public string ModifiedDate { get; set; }
         public bool? Status { get; set; }
 
         public GradeViewModel GradeVM { get; set; }
         public StudentScoreViewModel StudentScoreVM { get; set; }
+        public CertificateViewModel CertificateVM { get; set; }
     }
 }

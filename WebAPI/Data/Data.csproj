@@ -6,6 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20191215140308_InitialContext.cs" />
+    <Compile Remove="Migrations\20191215140308_InitialContext.Designer.cs" />
+    <Compile Remove="Migrations\20191217015329_AddNewColumToTableStudenScore1.cs" />
+    <Compile Remove="Migrations\20191217015329_AddNewColumToTableStudenScore1.Designer.cs" />
+    <Compile Remove="Migrations\20200212133729_AddTableCertificate.cs" />
+    <Compile Remove="Migrations\20200212133729_AddTableCertificate.Designer.cs" />
+    <Compile Remove="Migrations\20200219140755_InitialContext.cs" />
+    <Compile Remove="Migrations\20200219140755_InitialContext.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />

@@ -1,3 +1,4 @@
+import { Certificate } from './certificate.model';
 import { Grade } from './grade.model';
 import { Level } from './level.model';
 import { StudentScore } from './student-score.model';
@@ -17,4 +18,5 @@ export interface Student {
     status?: boolean;
     gradeVM?: Grade;
     studentScoreVM?: StudentScore;
+    certificateVM?: Certificate;
 }

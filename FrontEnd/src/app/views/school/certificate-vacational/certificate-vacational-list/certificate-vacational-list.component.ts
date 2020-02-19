@@ -6,6 +6,7 @@ import { StudentService } from './../../../../shared/services/student.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NzDrawerService } from 'ng-zorro-antd';
+import { CreateEditCertificateModalComponent } from '../modals/create-edit-certificate-modal/create-edit-certificate-modal.component';
 
 @Component({
   selector: 'app-certificate-vacational-list',
@@ -13,6 +14,16 @@ import { NzDrawerService } from 'ng-zorro-antd';
   styleUrls: ['./certificate-vacational-list.component.css']
 })
 export class CertificateVacationalListComponent implements OnInit {
+  listCareer = [
+    { label: 'Nấu Ăn', value: '0' },
+    { label: 'Điện dân dụng', value: '1' },
+    { label: 'Thợ xây', value: '2' },
+  ];
+  listCertificateType = [
+    { label: 'Kém', value: '0' },
+    { label: 'Khá', value: '1' },
+    { label: 'Giỏi', value: '2' },
+  ];
   dataSet = [];
   loading = true;
   sortValue = null;
@@ -58,6 +69,7 @@ export class CertificateVacationalListComponent implements OnInit {
         this.loading = false;
         this.pagination = res.pagination;
         this.dataSet = res.result;
+        console.log(this.dataSet);
       });
   }
 
@@ -75,5 +87,39 @@ export class CertificateVacationalListComponent implements OnInit {
     this.pagingParams.searchKey = '';
     this.pagingParams.searchValue = '';
     this.loadData(true);
+  }
+
+  addnew(data) {
+    const drawerRef = this.drawerService.create({
+      nzTitle: 'Thêm mới chứng chỉ nghề',
+      nzContent: CreateEditCertificateModalComponent,
+      nzWidth: 400,
+      nzContentParams: {
+        student: data,
+        certificate: {},
+        isAddNew: true
+      }
+    });
+
+    drawerRef.afterClose.subscribe(() => {
+      this.loadData();
+    });
+  }
+
+  update(data) {
+    const drawerRef = this.drawerService.create({
+      nzTitle: 'Cập nhật chứng chỉ nghề',
+      nzContent: CreateEditCertificateModalComponent,
+      nzWidth: 400,
+      nzContentParams: {
+        student: data,
+        certificate: data.certificateVM,
+        isAddNew: false
+      }
+    });
+
+    drawerRef.afterClose.subscribe(() => {
+      this.loadData();
+    });
   }
 }
