@@ -72,4 +72,8 @@ export class GradesService {
   delete(id: any) {
     return this.http.delete(this.baseUrl + 'Grade/' + id);
   }
+
+  GetGradeByLevel(level: any) {
+    return this.http.get(this.baseUrl + 'Grade/GetGradeByLevel/' + level);
+  }
 }

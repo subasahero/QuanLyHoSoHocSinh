@@ -32,6 +32,7 @@ export class TabLevelEightComponent implements OnInit {
     searchKey: '',
     searchValue: '',
     levelIdValue: '',
+    gradeId: ''
   };
 
   constructor(

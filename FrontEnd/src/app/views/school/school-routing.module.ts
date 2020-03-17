@@ -34,6 +34,10 @@ const routes: Routes = [
                 loadChildren: () => import('./rewards/rewards.module').then(m => m.RewardsModule)
             },
             {
+                path: 'hoc-sinh-da-tot-nghiep',
+                loadChildren: () => import('./student-graduate/student-graduate.module').then(m => m.StudentModule)
+            },
+            {
                 path: '',
                 redirectTo: 'hoc-sinh',
                 pathMatch: 'full'

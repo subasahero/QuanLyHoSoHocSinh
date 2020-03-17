@@ -35,6 +35,7 @@ export class StudentListSixComponent implements OnInit {
     searchKey: '',
     searchValue: '',
     levelIdValue: '',
+    gradeId: ''
   };
 
   constructor(

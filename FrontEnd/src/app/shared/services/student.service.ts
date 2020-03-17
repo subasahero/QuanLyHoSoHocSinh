@@ -91,6 +91,7 @@ export class StudentService {
       params = params.append('searchKey', pagingParams.searchKey);
       params = params.append('searchValue', pagingParams.searchValue);
       params = params.append('levelIdValue', pagingParams.levelIdValue);
+      params = params.append('gradeId', pagingParams.gradeId);
     }
 
     return this.http.get<Student[]>(this.baseUrl + 'Student/GetStudentByLevelPaging/' + levelEnum, { observe: 'response', params })

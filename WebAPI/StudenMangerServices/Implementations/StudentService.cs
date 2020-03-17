@@ -216,6 +216,11 @@ namespace StudenMangerServices.Implementations
                     x.GradeVM.Name.ToUpper().Contains(keyword));
             }
 
+            if(!string.IsNullOrEmpty(pagingParams.gradeId))
+            {
+                query = query.Where(x => x.GradeId.ToString() == pagingParams.gradeId);
+            }
+
             return await PagedList<StudentViewModel>
                 .CreateAsync(query, pagingParams.PageNumber, pagingParams.PageSize);
         }

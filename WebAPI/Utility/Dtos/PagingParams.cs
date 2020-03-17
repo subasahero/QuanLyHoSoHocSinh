@@ -14,5 +14,6 @@ namespace Utility.Dtos
         public string SearchValue { get; set; }
         public string SearchKey { get; set; }
         public string LevelIdValue { get; set; }
+        public string gradeId { get; set; }
     }
 }

@@ -35,6 +35,7 @@ export class StudentListEightComponent implements OnInit {
     searchKey: '',
     searchValue: '',
     levelIdValue: '',
+    gradeId: ''
   };
 
   constructor(

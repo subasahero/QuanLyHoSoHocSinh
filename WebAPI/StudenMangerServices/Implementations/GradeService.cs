@@ -101,6 +101,19 @@ namespace StudenMangerServices.Implementations
             return result;
         }
 
+        public async Task<List<GradeViewModel>> GetGradeByLevelAsync(int level)
+        {
+            IQueryable<GradeViewModel> query = from g in _dataContext.Grades
+                                               where (int)g.levelEnum == level
+                                               select new GradeViewModel
+                                               {
+                                                   Id = g.Id,
+                                                   levelEnum = g.levelEnum,
+                                                   Name = g.Name
+                                               };
+            return await query.ToListAsync();
+        }
+
         public async Task UpdateAsync(GradeViewModel gradeViewModel)
         {
             Grade grade = await _dataContext.Grades.FirstOrDefaultAsync(x => x.Id == gradeViewModel.Id);

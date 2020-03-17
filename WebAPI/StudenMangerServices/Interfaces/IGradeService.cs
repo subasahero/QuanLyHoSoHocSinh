@@ -11,6 +11,7 @@ namespace StudenMangerServices.Interfaces
     public interface IGradeService
     {
         Task<IList<GradeViewModel>> GetAllAsync();
+        Task<List<GradeViewModel>> GetGradeByLevelAsync(int level);
         Task<GradeViewModel> GetByIdAsync(Guid id);
         Task<PagedList<GradeViewModel>> GetAllPagingAsync(PagingParams pagingParams);
         Task<GradeViewModel> CreateAsync(GradeViewModel gradeViewModel);

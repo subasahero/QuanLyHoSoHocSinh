@@ -7,6 +7,7 @@ export class PagingParams {
     searchKey?: string;
     searchValue?: string;
     levelIdValue?: string;
+    gradeId?: string;
 
     constructor(
         pageNumber: number,
@@ -16,7 +17,8 @@ export class PagingParams {
         sortKey: string,
         searchKey: string,
         searchValue: string,
-        levelIdValue: string) {
+        levelIdValue: string,
+        gradeId: string) {
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;
         this.keyword = keyword;
@@ -25,5 +27,6 @@ export class PagingParams {
         this.searchKey = searchKey;
         this.searchValue = searchValue;
         this.levelIdValue = levelIdValue;
+        this.gradeId = gradeId;
     }
 }

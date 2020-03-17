@@ -62,6 +62,13 @@ namespace Backend.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetGradeByLevel/{level}")]
+        public async Task<IActionResult> GetGradeByLevel(int level)
+        {
+            List<GradeViewModel> result = await _gradeService.GetGradeByLevelAsync(level);
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(GradeViewModel gradeViewModel)
         {
