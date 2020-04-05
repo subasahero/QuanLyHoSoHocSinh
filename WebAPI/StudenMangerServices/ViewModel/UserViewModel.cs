@@ -22,6 +22,7 @@ namespace StudenMangerServices.ViewModel
         public string CreatedDate { get; set; }
         public string ModifiedDate { get; set; }
         public bool? Status { get; set; }
+        public string Password { get; set; }
 
         public string FullNameAndRole { get; set; }
         public Guid RoleId { get; set; }

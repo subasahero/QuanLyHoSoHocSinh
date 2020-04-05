@@ -111,6 +111,9 @@ namespace Backend.Extension
             services.AddScoped<IDetailDisciplineService, DetailDisciplineService>();
             services.AddScoped<IStudentScoreService, StudentScoreService>();
             services.AddScoped<ICertificateService, CertificateService>();
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRoleService, UserRoleService>();
         }
 
         public static void AddConfigureIdentity(this IServiceCollection services)

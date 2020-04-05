@@ -13,13 +13,19 @@ import vi from '@angular/common/locales/vi';
 import { SharedModule } from './shared/modules/shared.module';
 import { LoginPageComponent } from './views/login/login-page/login-page.component';
 import { EnvServiceProvider } from './env.service.provider';
+import { JwtModule } from "@auth0/angular-jwt";
+import { ChangeUserPasswordComponent } from './containers/modals/change-user-password/change-user-password.component';
+export function tokenGetter() {
+  return localStorage.getItem("token");
+}
 registerLocaleData(vi);
 
 @NgModule({
   declarations: [
     AppComponent,
     DefaultLayoutComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    ChangeUserPasswordComponent
   ],
   imports: [
     SharedModule,
@@ -28,9 +34,17 @@ registerLocaleData(vi);
     NgZorroAntdModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ["localhost:55737"],
+        blacklistedRoutes: ["localhost:55737/api/Auth"]
+      }
+    })
   ],
   providers: [{ provide: NZ_I18N, useValue: vi_VN },EnvServiceProvider],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ChangeUserPasswordComponent]
 })
 export class AppModule { }

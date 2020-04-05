@@ -5,8 +5,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Backend.Helpers;
+using Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -18,6 +22,7 @@ namespace Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -29,6 +34,7 @@ namespace Backend.Controllers
             _config = configuration;
         }
 
+        [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginViewModel loginVM)
         {
@@ -38,11 +44,11 @@ namespace Backend.Controllers
             {
                 case LoginResult.Succeeded:
                     UserViewModel userVM = await _authService.GetByUserNameAsync(loginVM.UserName);
-                    return Ok(new LoginResponse(true, await GenerateJwtAsync(userVM), null));
+                    return Ok(new LoginResponse(true, await GenerateJwtAsync(userVM), userVM.FullName));
                 case LoginResult.IsLockedOut:
                     return Ok(new LoginResponse(false, null, "Tài khoản đã bị khóa!"));
                 case LoginResult.Unauthorized:
-                    return Unauthorized();
+                    return Ok(new LoginResponse(false, null, "Bạn không có quyền!"));
                 default:
                     return Ok(new LoginResponse(false, null, "Tài khoản hoặc mật khẩu không đúng!"));
             }

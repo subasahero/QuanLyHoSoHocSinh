@@ -2,7 +2,8 @@ import { NotifyService } from './../../../shared/services/notify.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
@@ -18,6 +19,8 @@ export class LoginPageComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private notify: NotifyService,
+    private authService: AuthService,
+    public jwtHelper: JwtHelperService
   ) { }
 
   ngOnInit() {
@@ -44,13 +47,30 @@ export class LoginPageComponent implements OnInit {
       this.loadingSaveChanges = false;
       return;
     }
-    const login = this.loginForm.getRawValue();
-    if (login.userName === 'daohieu' && login.password === '123456') {
-      localStorage.setItem('logined', 'Chào mừng đào hiếu!');
-      this.router.navigate(['']);
-    } else {
-      this.notify.error('Sai tài khoản hoặc mật khẩu mời nhập lại!');
-      this.loadingSaveChanges = true;
-    }
+    const data = this.loginForm.getRawValue();
+    this.authService.login(data).subscribe(
+      (res: any) => {
+        if (res.status) {
+          localStorage.setItem('token', res.token);
+          this.router.navigate(['']);
+          this.loadingSaveChanges = false;
+        } else {
+          // cho message vao
+          this.loadingSaveChanges = false;
+          this.notify.error(res.message);
+        }
+      },
+      err => {
+        console.log(err);
+        this.loadingSaveChanges = false;
+      }
+    );
+    // if (login.userName === 'daohieu' && login.password === '123456') {
+    //   localStorage.setItem('logined', 'Chào mừng đào hiếu!');
+    //   this.router.navigate(['']);
+    // } else {
+    //   this.notify.error('Sai tài khoản hoặc mật khẩu mời nhập lại!');
+    //   this.loadingSaveChanges = true;
+    // }
   }
 }

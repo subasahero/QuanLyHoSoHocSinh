@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginPageComponent } from './views/login/login-page/login-page.component';
 import { AuthGuardService } from './shared/services/auth-guard.service';
+import { UserGuardService } from './shared/services/user-guard.service';
 
 const routes: Routes = [
   {
@@ -19,6 +20,11 @@ const routes: Routes = [
     },
     canActivate: [AuthGuardService],
     children: [
+      {
+        path: 'nguoi-dung',
+        loadChildren: () => import('./views/user/user.module').then(m => m.UserModule),
+        canActivate: [UserGuardService],
+      },
       {
         path: 'bao-cao',
         loadChildren: () => import('./views/report/report.module').then(m => m.ReportModule)

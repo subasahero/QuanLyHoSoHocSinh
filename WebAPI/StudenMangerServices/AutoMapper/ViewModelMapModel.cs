@@ -52,7 +52,7 @@ namespace StudenMangerServices.AutoMapper
             CreateMap<UserSessionViewModel, User>();
             CreateMap<UserUpdationViewModel, User>();
             CreateMap<CertificateViewModel, Certificate>();
-
+            CreateMap<UserCreationViewModel, User>();
         }
     }
 }

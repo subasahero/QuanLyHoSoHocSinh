@@ -9,10 +9,11 @@ export class AuthGuardService implements CanActivate {
   constructor(private router: Router) { }
 
   canActivate(): boolean {
-    if (localStorage.getItem('logined') !== 'Chào mừng đào hiếu!') {
-      this.router.navigate(['login']);
-      return false;
+    if (localStorage.getItem('token')) {
+      return true;
     }
-    return true;
+
+    this.router.navigate(['login']);
+    return false;
   }
 }
