@@ -32,6 +32,7 @@ namespace Backend.Controllers
             return Ok(data);
         }
 
+
         [HttpGet("getAllPaging")]
         public async Task<IActionResult> GetAllPaging([FromQuery]PagingParams pagingParams)
         {

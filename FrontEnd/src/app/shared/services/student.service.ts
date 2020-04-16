@@ -110,11 +110,15 @@ export class StudentService {
     return this.http.get(this.baseUrl + 'Student/' + id);
   }
 
-  addNew(data: Student) {
+  GetByIdAllInfo(id: any) {
+    return this.http.get(this.baseUrl + 'Student/GetByIdAllInfo/' + id);
+  }
+
+  addNew(data: any) {
     return this.http.post(this.baseUrl + 'Student', data);
   }
 
-  update(data: Student) {
+  update(data: any) {
     return this.http.put(this.baseUrl + 'Student', data);
   }
 

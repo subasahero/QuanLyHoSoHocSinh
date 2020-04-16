@@ -12,5 +12,7 @@ namespace StudenMangerServices.Interfaces
         Task<LoginResult> LoginAsync(LoginViewModel loginVM);
         Task<UserViewModel> GetByUserNameAsync(string userName);
         Task<IList<string>> GetRolesAsync(UserViewModel userVM);
+
+        Task<bool> CreateAdminUser();
     }
 }

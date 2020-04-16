@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Backend.Extension;
 using Data.Enum;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StudenMangerServices.Interfaces;
@@ -17,10 +19,12 @@ namespace Backend.Controllers
     public class StudentController : ControllerBase
     {
         private readonly IStudentService _studentService;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public StudentController(IStudentService studentService)
+        public StudentController(IStudentService studentService, IHostingEnvironment hostingEnvironment)
         {
             _studentService = studentService;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [HttpGet]
@@ -61,6 +65,23 @@ namespace Backend.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetByIdAllInfo/{id}")]
+        public async Task<IActionResult> GetByIdAllInfo(Guid? id)
+        {
+            if (string.IsNullOrEmpty(id.ToString()))
+            {
+                return BadRequest();
+            }
+
+            StudentViewModel result = await _studentService.GetByIdAllInfoAsync(id.Value);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
         [HttpGet("getAllPaging")]
         public async Task<IActionResult> GetAllPaging([FromQuery]PagingParams pagingParams)
         {
@@ -85,7 +106,7 @@ namespace Backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(StudentViewModel studentViewModel)
+        public async Task<IActionResult> Create([FromForm]StudentViewModel studentViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -93,7 +114,30 @@ namespace Backend.Controllers
             }
             try
             {
-                studentViewModel.Code = "SV" + DateTime.Now.ToString("MMddyyhhmmssff");
+                studentViewModel.Code = "HS" + DateTime.Now.ToString("MMddyyhhmmssff");
+                string getExtension = Path.GetExtension(studentViewModel.File.FileName);
+                string imgUploadFolder = Path.Combine(_hostingEnvironment.ContentRootPath, "Assets/uploaded/img");
+
+                if (!Directory.Exists(imgUploadFolder))
+                {
+                    Directory.CreateDirectory(imgUploadFolder);
+                }
+                if (getExtension == ".jpg" || getExtension == ".png")
+                {
+                    string uploadFolder = Path.Combine(_hostingEnvironment.ContentRootPath, "Assets/uploaded/img");
+                    string imgFileName = Guid.NewGuid() + getExtension;
+                    string imglFilePath = Path.Combine(uploadFolder, imgFileName);
+                    FileInfo fileLocation = new FileInfo(imglFilePath);
+                    using (var fileStream = new FileStream(imglFilePath, FileMode.Create))
+                    {
+                        await studentViewModel.File.CopyToAsync(fileStream);
+                    }
+                    studentViewModel.imageLink = imgFileName;
+                }
+                else
+                {
+                    return BadRequest();
+                }
                 StudentViewModel result = await _studentService.CreateAsync(studentViewModel);
                 return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
             }
@@ -104,7 +148,7 @@ namespace Backend.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(StudentViewModel studentViewModel)
+        public async Task<IActionResult> Update([FromForm]StudentViewModel studentViewModel)
         {
             if (!ModelState.IsValid)
             {

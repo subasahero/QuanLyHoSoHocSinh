@@ -17,9 +17,11 @@ namespace Data.Entities
         public string DateGoShcool { get; set; }
         public string CreatedDate { get; set; }
         public string ModifiedDate { get; set; }
+        public string imageLink { get; set; }
+        public string address { get; set; }
         public bool Status { get; set; }
 
         public virtual Grade Grade { get; set; }
-        public Certificate Certificate { get; set; }
+        //public Certificate Certificate { get; set; }
     }
 }

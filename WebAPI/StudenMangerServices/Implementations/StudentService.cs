@@ -3,11 +3,13 @@ using AutoMapper.QueryableExtensions;
 using Data;
 using Data.Entities;
 using Data.Enum;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using StudenMangerServices.Interfaces;
 using StudenMangerServices.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,11 +22,13 @@ namespace StudenMangerServices.Implementations
     {
         private readonly DataContext _dataContext;
         private readonly IMapper _mapper;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public StudentService(DataContext dataContext, IMapper mapper)
+        public StudentService(DataContext dataContext, IMapper mapper, IHostingEnvironment hostingEnvironment)
         {
             _dataContext = dataContext;
             _mapper = mapper;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public async Task<bool> ChangeGradeAsync(ChangeGradeViewModel changeGradeViewModel)
@@ -87,6 +91,8 @@ namespace StudenMangerServices.Implementations
                                                         Birthday = s.Birthday,
                                                         BirthLocate = s.BirthLocate,
                                                         Talent = s.Talent,
+                                                        address = s.address,
+                                                        imageLink = s.imageLink,
                                                         DateGoShcool = s.DateGoShcool,
                                                         CreatedDate = s.CreatedDate,
                                                         ModifiedDate = s.ModifiedDate,
@@ -100,8 +106,8 @@ namespace StudenMangerServices.Implementations
         {
             IQueryable<StudentViewModel> query = from s in _dataContext.Students
                                                  join g in _dataContext.Grades on s.GradeId equals g.Id
-                                                 join c in _dataContext.Certificates on s.Id equals c.StudentId into tmpCertificates
-                                                 from c in tmpCertificates.DefaultIfEmpty()
+                                                 //join c in _dataContext.Certificates on s.Id equals c.StudentId into tmpCertificates
+                                                 //from c in tmpCertificates.DefaultIfEmpty()
                                                  select new StudentViewModel
                                                  {
                                                      Id = s.Id,
@@ -113,8 +119,10 @@ namespace StudenMangerServices.Implementations
                                                      BirthLocate = s.BirthLocate,
                                                      Talent = s.Talent,
                                                      DateGoShcool = s.DateGoShcool,
+                                                     address = s.address,
+                                                     imageLink = s.imageLink,
                                                      GradeVM = _mapper.Map<GradeViewModel>(g),
-                                                     CertificateVM = _mapper.Map<CertificateViewModel>(c),
+                                                     //CertificateVM = _mapper.Map<CertificateViewModel>(c),
                                                      CreatedDate = s.CreatedDate,
                                                      ModifiedDate = s.ModifiedDate,
                                                      Status = s.Status
@@ -137,6 +145,34 @@ namespace StudenMangerServices.Implementations
                 .CreateAsync(query, pagingParams.PageNumber, pagingParams.PageSize);
         }
 
+        public async Task<StudentViewModel> GetByIdAllInfoAsync(Guid id)
+        {
+            StudentViewModel query = (from m in _dataContext.Students
+                                      where m.Id == id
+                                      join sc in _dataContext.StudentScores on m.Id equals sc.StudentId into tmpStudentScores
+                                      from sc in tmpStudentScores.DefaultIfEmpty()
+                                      select new StudentViewModel
+                                      {
+                                          Id = m.Id,
+                                          GradeId = m.GradeId,
+                                          Code = m.Code,
+                                          Name = m.Name,
+                                          Sex = m.Sex,
+                                          Birthday = m.Birthday,
+                                          BirthLocate = m.BirthLocate,
+                                          Talent = m.Talent,
+                                          address = m.address,
+                                          imageLink = m.imageLink,
+                                          DateGoShcool = m.DateGoShcool,
+                                          CreatedDate = m.CreatedDate,
+                                          ModifiedDate = m.ModifiedDate,
+                                          Status = m.Status,
+                                          StudentScoreVM = _mapper.Map<StudentScoreViewModel>(sc)
+                                      }).FirstOrDefault();
+
+            return query;
+        }
+
         public async Task<StudentViewModel> GetByIdAsync(Guid id)
         {
             Student student = await _dataContext.Students
@@ -150,8 +186,8 @@ namespace StudenMangerServices.Implementations
         {
             List<StudentViewModel> result = await (from s in _dataContext.Students
                                                     join g in _dataContext.Grades on s.GradeId equals g.Id
-                                                   join c in _dataContext.Certificates on s.Id equals c.StudentId into tmpCertificates
-                                                   from c in tmpCertificates.DefaultIfEmpty()
+                                                   //join c in _dataContext.Certificates on s.Id equals c.StudentId into tmpCertificates
+                                                   //from c in tmpCertificates.DefaultIfEmpty()
                                                    orderby s.Name
                                                     select new StudentViewModel
                                                     {
@@ -163,12 +199,14 @@ namespace StudenMangerServices.Implementations
                                                         Birthday = s.Birthday,
                                                         BirthLocate = s.BirthLocate,
                                                         Talent = s.Talent,
+                                                        address = s.address,
+                                                        imageLink = s.imageLink,
                                                         DateGoShcool = s.DateGoShcool,
                                                         CreatedDate = s.CreatedDate,
                                                         ModifiedDate = s.ModifiedDate,
                                                         Status = s.Status,
                                                         GradeVM = _mapper.Map<GradeViewModel>(g),
-                                                        CertificateVM = _mapper.Map<CertificateViewModel>(c)
+                                                        //CertificateVM = _mapper.Map<CertificateViewModel>(c)
                                                     }).ToListAsync();
             result = result.Where(x => x.GradeVM.levelEnum == levelEnum).ToList();
 
@@ -181,8 +219,8 @@ namespace StudenMangerServices.Implementations
                                                  join g in _dataContext.Grades on s.GradeId equals g.Id
                                                  join c in _dataContext.StudentScores on s.Id equals c.StudentId into tmpStudentScores
                                                  from c in tmpStudentScores.DefaultIfEmpty()
-                                                 join cc in _dataContext.Certificates on s.Id equals cc.StudentId into tmpCertificates
-                                                 from cc in tmpCertificates.DefaultIfEmpty()
+                                                 //join cc in _dataContext.Certificates on s.Id equals cc.StudentId into tmpCertificates
+                                                 //from cc in tmpCertificates.DefaultIfEmpty()
                                                  select new StudentViewModel
                                                  {
                                                      Id = s.Id,
@@ -194,9 +232,11 @@ namespace StudenMangerServices.Implementations
                                                      BirthLocate = s.BirthLocate,
                                                      Talent = s.Talent ?? string.Empty,
                                                      DateGoShcool = s.DateGoShcool,
+                                                     address = s.address,
+                                                     imageLink = s.imageLink,
                                                      GradeVM = _mapper.Map<GradeViewModel>(g),
                                                      StudentScoreVM = _mapper.Map<StudentScoreViewModel>(c),
-                                                     CertificateVM = _mapper.Map<CertificateViewModel>(cc),
+                                                     //CertificateVM = _mapper.Map<CertificateViewModel>(cc),
                                                      CreatedDate = s.CreatedDate,
                                                      ModifiedDate = s.ModifiedDate,
                                                      Status = s.Status
@@ -241,6 +281,8 @@ namespace StudenMangerServices.Implementations
                                                      Birthday = s.Birthday,
                                                      BirthLocate = s.BirthLocate,
                                                      Talent = s.Talent,
+                                                     address = s.address,
+                                                     imageLink = s.imageLink,
                                                      DateGoShcool = s.DateGoShcool,
                                                      CreatedDate = s.CreatedDate,
                                                      ModifiedDate = s.ModifiedDate,
@@ -259,6 +301,27 @@ namespace StudenMangerServices.Implementations
         public async Task<StudentViewModel> UpdateAsync(StudentViewModel studentViewModel)
         {
             Student student = await _dataContext.Students.FirstOrDefaultAsync(x => x.Id == studentViewModel.Id);
+            if (studentViewModel.File != null && studentViewModel.File.Length > 0)
+            {
+                string folder = $"Assets/uploaded/img/";
+                string oldFilePath = Path.Combine(_hostingEnvironment.ContentRootPath, folder + student.imageLink);
+                if (File.Exists(oldFilePath))
+                {
+                    File.Delete(oldFilePath);
+                }
+
+                string getExtension = Path.GetExtension(studentViewModel.File.FileName);
+                string imgFileName = Guid.NewGuid() + getExtension;
+                string uploadFolder = Path.Combine(_hostingEnvironment.ContentRootPath, "Assets/uploaded/img");
+                string imglFilePath = Path.Combine(uploadFolder, imgFileName);
+                FileInfo fileLocation = new FileInfo(imglFilePath);
+                using (var fileStream = new FileStream(imglFilePath, FileMode.Create))
+                {
+                    await studentViewModel.File.CopyToAsync(fileStream);
+                }
+                studentViewModel.imageLink = imgFileName;
+
+            }
             _dataContext.Entry(student).CurrentValues.SetValues(studentViewModel);
             await _dataContext.SaveChangesAsync();
             StudentViewModel result = _mapper.Map<StudentViewModel>(student);

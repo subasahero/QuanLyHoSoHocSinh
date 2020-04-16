@@ -35,6 +35,14 @@ namespace Backend.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet("CreateAdminUser")]
+        public async Task<IActionResult> GetAll()
+        {
+            var data = await _authService.CreateAdminUser();
+            return Ok(data);
+        }
+
+        [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginViewModel loginVM)
         {

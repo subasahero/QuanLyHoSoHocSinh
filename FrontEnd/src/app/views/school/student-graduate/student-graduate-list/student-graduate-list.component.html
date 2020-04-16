@@ -50,12 +50,12 @@
       <td>{{data?.talent}}</td>
       <td>
         <nz-button-group>
-          <button nz-button nzType="default" nz-tooltip nzTitle="Sửa" (click)="update(data)">
-            <i nz-icon nzType="edit" theme="outline"></i>
+          <button nz-button nzType="default" nz-tooltip nzTitle="Sửa" (click)="view(data)">
+            <i nz-icon nzType="eye" theme="outline"></i>
           </button>
-          <button nz-button nzType="danger" nz-tooltip nzTitle="Xóa" (click)="delete(data.id)">
+          <!-- <button nz-button nzType="danger" nz-tooltip nzTitle="Xóa" (click)="delete(data.id)">
             <i nz-icon nzType="delete" theme="outline"></i>
-          </button>
+          </button> -->
         </nz-button-group>
       </td>
     </tr>

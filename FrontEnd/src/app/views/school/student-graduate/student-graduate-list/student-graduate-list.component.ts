@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NzDrawerService, NzModalService } from 'ng-zorro-antd';
 import { GradesService } from 'src/app/shared/services/grades.service';
+import { ModalStudentGraduateComponent } from '../modals/modal-student-graduate/modal-student-graduate.component';
 
 @Component({
   selector: 'app-student-graduate-list',
@@ -21,6 +22,7 @@ import { GradesService } from 'src/app/shared/services/grades.service';
 export class StudentGraduateListComponent implements OnInit {
   pageNumber = ConfigConstant.PAGE_INDEX;
   pageSize = ConfigConstant.PAGE_SIZE;
+  selectedValue: any;
   dataSet = [];
   loading = true;
   sortValue = null;
@@ -56,6 +58,19 @@ export class StudentGraduateListComponent implements OnInit {
         console.log(this.dataSet);
       }
     );
+  }
+
+  view(data) {
+    const drawerRef = this.drawerService.create({
+      nzContent: ModalStudentGraduateComponent,
+      nzWidth: "60%",
+      nzContentParams: {
+        student: data,
+      }
+    });
+    drawerRef.afterClose.subscribe(() => {
+      this.loadData();
+    });
   }
 
   sort(sort: { key: string, value: string }): void {

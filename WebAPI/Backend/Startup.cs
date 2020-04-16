@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace Backend
 {
@@ -62,6 +64,13 @@ namespace Backend
                     name: "spa-fallback",
                     defaults: new { controller = "Fallback", action = "Index" }
                 );
+            });
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "Assets/uploaded/img")),
+                RequestPath = "/img"
             });
         }
     }

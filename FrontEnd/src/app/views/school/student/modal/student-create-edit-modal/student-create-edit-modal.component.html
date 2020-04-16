@@ -30,6 +30,13 @@
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
+          <nz-form-label nzRequired nzFor="address">Nơi ở hiện tại</nz-form-label>
+          <nz-form-control nzErrorTip="Vui lòng nhập nơi ở hiện tại!">
+            <textarea placeholder="Nhập nơi ở hiện tại" type="text" nz-input formControlName="address" id="address"
+              autofocus ></textarea>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
           <nz-form-label nzFor="talent">Tài năng</nz-form-label>
           <nz-form-control>
             <input placeholder="Nhập tài năng" type="text" nz-input formControlName="talent" id="talent" autofocus />
@@ -52,6 +59,25 @@
             </nz-select>
           </nz-form-control>
         </nz-form-item>
+        <br/>
+        <nz-form-item>
+          <!-- <nz-form-label [nzSm]="7" [nzXs]="24" nzRequired nzFor="imageLink">Chọn ảnh</nz-form-label> -->
+          <nz-form-control [nzSm]="17" [nzXs]="24" nzErrorTip="Vui lòng chọn logo công ty">
+            <button nz-button nzType="default" type="button" (click)="fileInput.click()" [nzLoading]="loadingFile">
+              <i nz-icon nzType="upload" nzTheme="outline"></i> Ảnh HS
+              <input #fileInput type="file" (change)="onFileInput($event)" style="display:none;" />
+            </button>
+            &nbsp;
+            <nz-tag *ngIf="visibleTagName" nz-tooltip
+              [nzTooltipTitle]="contentTooltip">{{sliceTagName(fileName)}}
+            </nz-tag>
+            <input type="text" nz-input formControlName="imageLink" id="imageLink" style="display: none;" />
+          </nz-form-control>
+        </nz-form-item>
+        <br/>
+        <ng-container *ngIf="!isAddNew">
+          <img [src]="imageLinkStudent" alt="Ảnh hồ sơ" style="width: 80px;height: 120px;">
+        </ng-container>
       </div>
     </div>
   </form>

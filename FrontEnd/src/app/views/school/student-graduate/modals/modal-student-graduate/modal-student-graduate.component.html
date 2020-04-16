@@ -1,3 +1,38 @@
-<p>
-  modal-student-graduate works!
-</p>
+<nz-spin [nzSpinning]="isSpinning">
+  <nz-tabset *ngIf="studentData">
+    <nz-tab nzTitle="Thông tin cá nhân">
+      <nz-descriptions nzTitle="Thông tin học sinh" nzBordered>
+        <nz-descriptions-item nzTitle="Mã" [nzSpan]="4">{{studentData?.code}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Họ và tên" [nzSpan]="4">{{studentData?.name}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Ngày nhập học" [nzSpan]="4">
+          {{studentData?.dateGoShcool | date: 'dd/MM/yyyy'}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Ngày sinh" [nzSpan]="4">
+          {{studentData?.birthday | date: 'dd/MM/yyyy'}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Giới tính" [nzSpan]="4">
+          {{studentData?.sex}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Nơi sinh" [nzSpan]="4">
+          {{studentData?.birthLocate}}
+        </nz-descriptions-item>
+      </nz-descriptions>
+    </nz-tab>
+    <nz-tab nzTitle="Hồ sơ điểm trung bình cộng">
+      <nz-descriptions nzTitle="Điểm trung bình cộng" nzBordered>
+        <nz-descriptions-item nzTitle="TBC lớp 6">{{studentData.studentScoreVM?.averageLevelSix}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="TBC HK I">{{studentData.studentScoreVM?.semesterOneLevelSix}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="TBC HK II">{{studentData.studentScoreVM?.semesterTwoLevelSix}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="TBC lớp 7">{{studentData.studentScoreVM?.averageLevelSeven}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="TBC HK I">{{studentData.studentScoreVM?.semesterOneLevelSeven}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="TBC HK II">{{studentData.studentScoreVM?.semesterTwoLevelSeven}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="TBC lớp 8">{{studentData.studentScoreVM?.averageLevelEight}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="TBC HK I">{{studentData.studentScoreVM?.semesterOneLevelEight}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="TBC HK II">{{studentData.studentScoreVM?.semesterTwoLevelEight}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="TBC lớp 9">{{studentData.studentScoreVM?.averageLevelNine}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="TBC HK I">{{studentData.studentScoreVM?.semesterOneLevelNine}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="TBC HK II">{{studentData.studentScoreVM?.semesterTwoLevelNine}}</nz-descriptions-item>
+      </nz-descriptions>
+    </nz-tab>
+  </nz-tabset>
+</nz-spin>

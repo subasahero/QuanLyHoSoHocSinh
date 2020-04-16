@@ -18,18 +18,23 @@ namespace Backend
         {
             IWebHost host = CreateWebHostBuilder(args).Build();
 
-            //Seed database
             using (IServiceScope scope = host.Services.CreateScope())
             {
                 IServiceProvider services = scope.ServiceProvider;
 
-                IDatabaseInitializer databaseInitializer = services.GetRequiredService<IDatabaseInitializer>();
-                databaseInitializer.SeedAsync().Wait();
-
-                host.Run();
+                try
+                {
+                    IDatabaseInitializer databaseInitializer = services.GetRequiredService<IDatabaseInitializer>();
+                    databaseInitializer.SeedAsync().Wait();
+                }
+                catch (Exception ex)
+                {
+                    ILogger<Program> logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred seeding the DB.");
+                }
             }
 
-            //CreateWebHostBuilder(args).Build().Run();
+            host.Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

@@ -12,6 +12,7 @@ namespace StudenMangerServices.Interfaces
     {
         Task<IList<StudentViewModel>> GetAllAsync();
         Task<StudentViewModel> GetByIdAsync(Guid id);
+        Task<StudentViewModel> GetByIdAllInfoAsync(Guid id);
         Task<PagedList<StudentViewModel>> GetAllPagingAsync(PagingParams pagingParams);
         Task<StudentViewModel> CreateAsync(StudentViewModel studentViewModel);
         Task<StudentViewModel> UpdateAsync(StudentViewModel studentViewModel);

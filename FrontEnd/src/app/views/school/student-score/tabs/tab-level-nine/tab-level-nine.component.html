@@ -89,9 +89,9 @@
               <i nz-icon nzType="delete" theme="outline"></i>
             </button>
           </ng-template>
-          <ng-container *ngIf="data.certificateVM !== null">
-            <button nz-button nzType="default" nz-tooltip nzTitle="Lên lớp" (click)="nextLevel(data)">
-              <i nz-icon nzType="arrow-up" theme="outline"></i>
+          <ng-container *ngIf="data.studentScoreVM?.averageLevelNine > 4 || data.studentScoreVM?.averageLevelNine == 4">
+            <button nz-button nzType="default" nz-tooltip nzTitle="Tốt nghiệp" (click)="nextLevel(data)">
+              <i nz-icon nzType="book" theme="outline"></i>
             </button>
           </ng-container>
         </nz-button-group>
