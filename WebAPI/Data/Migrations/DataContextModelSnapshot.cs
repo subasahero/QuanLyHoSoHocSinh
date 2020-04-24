@@ -79,6 +79,166 @@ namespace Data.Migrations
                     b.ToTable("DetailRewards");
                 });
 
+            modelBuilder.Entity("Data.Entities.DiemLopBay", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<float>("AmNhac");
+
+                    b.Property<float>("CongNghe");
+
+                    b.Property<float>("DiaLy");
+
+                    b.Property<float>("DiemTrungBinhCong");
+
+                    b.Property<float>("GiaoDucCongDan");
+
+                    b.Property<float>("LichSu");
+
+                    b.Property<float>("MyThuat");
+
+                    b.Property<float>("NgoaiNgu");
+
+                    b.Property<float>("NguVan");
+
+                    b.Property<float>("SinhHoc");
+
+                    b.Property<Guid>("StudentId");
+
+                    b.Property<float>("Tin");
+
+                    b.Property<float>("Toan");
+
+                    b.Property<float>("VatLy");
+
+                    b.Property<int>("loai");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DiemLopBays");
+                });
+
+            modelBuilder.Entity("Data.Entities.DiemLopChin", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<float>("AmNhac");
+
+                    b.Property<float>("CongNghe");
+
+                    b.Property<float>("DiaLy");
+
+                    b.Property<float>("DiemTrungBinhCong");
+
+                    b.Property<float>("GiaoDucCongDan");
+
+                    b.Property<float>("LichSu");
+
+                    b.Property<float>("MyThuat");
+
+                    b.Property<float>("NgoaiNgu");
+
+                    b.Property<float>("NguVan");
+
+                    b.Property<float>("SinhHoc");
+
+                    b.Property<Guid>("StudentId");
+
+                    b.Property<float>("Tin");
+
+                    b.Property<float>("Toan");
+
+                    b.Property<float>("VatLy");
+
+                    b.Property<int>("loai");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DiemLopChins");
+                });
+
+            modelBuilder.Entity("Data.Entities.DiemLopSau", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<float>("AmNhac");
+
+                    b.Property<float>("CongNghe");
+
+                    b.Property<float>("DiaLy");
+
+                    b.Property<float>("DiemTrungBinhCong");
+
+                    b.Property<float>("GiaoDucCongDan");
+
+                    b.Property<float>("LichSu");
+
+                    b.Property<float>("MyThuat");
+
+                    b.Property<float>("NgoaiNgu");
+
+                    b.Property<float>("NguVan");
+
+                    b.Property<float>("SinhHoc");
+
+                    b.Property<Guid>("StudentId");
+
+                    b.Property<float>("Tin");
+
+                    b.Property<float>("Toan");
+
+                    b.Property<float>("VatLy");
+
+                    b.Property<int>("loai");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DiemLopSaus");
+                });
+
+            modelBuilder.Entity("Data.Entities.DiemLopTam", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<float>("AmNhac");
+
+                    b.Property<float>("CongNghe");
+
+                    b.Property<float>("DiaLy");
+
+                    b.Property<float>("DiemTrungBinhCong");
+
+                    b.Property<float>("GiaoDucCongDan");
+
+                    b.Property<float>("LichSu");
+
+                    b.Property<float>("MyThuat");
+
+                    b.Property<float>("NgoaiNgu");
+
+                    b.Property<float>("NguVan");
+
+                    b.Property<float>("SinhHoc");
+
+                    b.Property<Guid>("StudentId");
+
+                    b.Property<float>("Tin");
+
+                    b.Property<float>("Toan");
+
+                    b.Property<float>("VatLy");
+
+                    b.Property<int>("loai");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DiemLopTams");
+                });
+
             modelBuilder.Entity("Data.Entities.Discipline", b =>
                 {
                     b.Property<Guid>("Id")

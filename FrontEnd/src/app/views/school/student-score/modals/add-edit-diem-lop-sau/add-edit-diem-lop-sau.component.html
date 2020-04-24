@@ -1,0 +1,111 @@
+<div nz-row>
+  <form nz-form [formGroup]="bangDiemForm" autocomplete="off">
+    <div nz-row>
+      <div nz-col nzXs="24" nzSm="24" nzMd="11" nzLg="11" nzXl="11">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="toan">Toan</nz-form-label>
+          <nz-form-control nzErrorTip="Vui lòng nhập điểm toán!">
+            <input placeholder="Nhập tên điểm toán" type="number" nz-input formControlName="toan"
+              id="toan" autofocus />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="nguVan">Ngữ Văn</nz-form-label>
+          <nz-form-control nzErrorTip="Vui lòng nhập điểm ngữ văn!">
+            <input placeholder="Nhập tên điểm ngữ văn" type="number" nz-input formControlName="nguVan"
+              id="nguVan" autofocus />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="ngoaiNgu">Ngoại ngữ</nz-form-label>
+          <nz-form-control nzErrorTip="Vui lòng nhập điểm ngoại ngữ!">
+            <input placeholder="Nhập tên điểm ngoại ngữ" type="number" nz-input formControlName="ngoaiNgu"
+              id="ngoaiNgu" autofocus />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="tin">Tin</nz-form-label>
+          <nz-form-control nzErrorTip="Vui lòng nhập điểm tin!">
+            <input placeholder="Nhập tên điểm tin" type="number" nz-input formControlName="tin"
+              id="tin" autofocus />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="lichSu">Lịch sử</nz-form-label>
+          <nz-form-control nzErrorTip="Vui lòng nhập điểm lịch sử!">
+            <input placeholder="Nhập tên điểm lịch sử" type="number" nz-input formControlName="lichSu"
+              id="lichSu" autofocus />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="diaLy">Địa lý</nz-form-label>
+          <nz-form-control nzErrorTip="Vui lòng nhập điểm địa lý!">
+            <input placeholder="Nhập tên điểm địa lý" type="number" nz-input formControlName="diaLy"
+              id="diaLy" autofocus />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="giaoDucCongDan">GDCD</nz-form-label>
+          <nz-form-control nzErrorTip="Vui lòng nhập điểm GDCD!">
+            <input placeholder="Nhập tên điểm GDCD" type="number" nz-input formControlName="giaoDucCongDan"
+              id="giaoDucCongDan" autofocus />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzXs="24" nzSm="24" nzMd="2" nzLg="2" nzXl="2"></div>
+      <div nz-col nzXs="24" nzSm="24" nzMd="11" nzLg="11" nzXl="11">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="congNghe">Công nghệ</nz-form-label>
+          <nz-form-control nzErrorTip="Vui lòng nhập điểm công nghệ!">
+            <input placeholder="Nhập tên điểm công nghệ" type="number" nz-input formControlName="congNghe"
+              id="congNghe" autofocus />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="vatLy">Vật lý</nz-form-label>
+          <nz-form-control nzErrorTip="Vui lòng nhập điểm vật lý!">
+            <input placeholder="Nhập tên điểm vật lý" type="number" nz-input formControlName="vatLy"
+              id="vatLy" autofocus />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="sinhHoc">Sinh học</nz-form-label>
+          <nz-form-control nzErrorTip="Vui lòng nhập điểm sinh học!">
+            <input placeholder="Nhập tên điểm sinh học" type="number" nz-input formControlName="sinhHoc"
+              id="sinhHoc" autofocus />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="amNhac">Âm nhạc</nz-form-label>
+          <nz-form-control nzErrorTip="Vui lòng nhập điểm âm nhạc!">
+            <input placeholder="Nhập tên điểm âm nhạc" type="number" nz-input formControlName="amNhac"
+              id="amNhac" autofocus />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="myThuat">Mỹ Thuật</nz-form-label>
+          <nz-form-control nzErrorTip="Vui lòng nhập điểm mỹ Thuật!">
+            <input placeholder="Nhập tên điểm mỹ Thuật" type="number" nz-input formControlName="myThuat"
+              id="myThuat" autofocus />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="diemTrungBinhCong">Điểm TBC</nz-form-label>
+          <nz-form-control nzErrorTip="Vui lòng nhập điểm TBC!">
+            <input placeholder="Nhập tên điểm TBC" type="number" nz-input formControlName="diemTrungBinhCong"
+              id="diemTrungBinhCong" autofocus />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+</div>
+<br />
+<div nz-row class="footer-drawer">
+  <button nz-button nzType="default" (click)="close()">
+    <i nz-icon nzType="close" nzTheme="outline"></i>Hủy
+  </button>
+  <button nz-button nzType="primary" (click)="saveChanges()" [nzLoading]="loadingSaveChanges">
+    <i nz-icon nzType="save" nzTheme="outline"></i>Lưu
+  </button>
+</div>

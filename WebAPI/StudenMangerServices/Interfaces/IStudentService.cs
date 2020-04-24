@@ -18,6 +18,7 @@ namespace StudenMangerServices.Interfaces
         Task<StudentViewModel> UpdateAsync(StudentViewModel studentViewModel);
         Task DeleteAsync(Guid id);
         Task<bool> CheckExistsAsync(Guid id);
+        Task<bool> DinhChiHocAsync(DinhChiHocViewModel model);
         Task<bool> CheckExistsRecordAsync(string studentCode);
         Task<bool> ChangeGradeAsync(ChangeGradeViewModel changeGradeViewModel);
         List<StudentFlowYearViewModel> GetStudentReportEnrollment(string FromYear, string ToYear);

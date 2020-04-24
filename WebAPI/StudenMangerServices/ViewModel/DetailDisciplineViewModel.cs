@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Enum;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -20,7 +21,9 @@ namespace StudenMangerServices.ViewModel
         public string ModifiedDate { get; set; }
         public bool? Status { get; set; }
 
-        public DisciplineViewModel DisciplineVM { get; set; }
+        public DisciplineViewModel Discipline { get; set; }
         public StudentViewModel StudentVM { get; set; }
+
+        public LevelEnum levelEnum { get; set; }
     }
 }

@@ -117,6 +117,11 @@ namespace Backend.Extension
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRoleService, UserRoleService>();
+            services.AddScoped<IDiemLopSauService, DiemLopSauService>();
+            services.AddScoped<IDiemLopBayService, DiemLopBayService>();
+            services.AddScoped<IDiemLopTamService, DiemLopTamService>();
+            services.AddScoped<IDiemLopChinService, DiemLopChinService>();
+
         }
 
         public static void AddConfigureIdentity(this IServiceCollection services)

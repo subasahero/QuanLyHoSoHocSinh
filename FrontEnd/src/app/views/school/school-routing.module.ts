@@ -38,6 +38,10 @@ const routes: Routes = [
                 loadChildren: () => import('./student-graduate/student-graduate.module').then(m => m.StudentModule)
             },
             {
+                path: 'hoc-sinh-bo-hoc',
+                loadChildren: () => import('./student-quit/student-quit.module').then(m => m.StudentQuitModule)
+            },
+            {
                 path: '',
                 redirectTo: 'hoc-sinh',
                 pathMatch: 'full'

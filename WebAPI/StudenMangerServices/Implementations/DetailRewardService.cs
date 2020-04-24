@@ -63,7 +63,7 @@ namespace StudenMangerServices.Implementations
                                                       Reason = d.Reason,
                                                       Gift = d.Gift,
                                                       StudentVM = _mapper.Map<StudentViewModel>(s),
-                                                      RewardVM = _mapper.Map<RewardViewModel>(r),
+                                                      Reward = _mapper.Map<RewardViewModel>(r),
                                                       CreatedDate = d.CreatedDate,
                                                       ModifiedDate = d.ModifiedDate,
                                                       Status = d.Status
@@ -76,6 +76,7 @@ namespace StudenMangerServices.Implementations
             IQueryable<DetailRewardViewModel> query = from dr in _dataContext.DetailRewards
                                                       join s in _dataContext.Students on dr.StudentId equals s.Id
                                                       join r in _dataContext.Rewards on dr.RewardId equals r.Id
+                                                      join g in _dataContext.Grades on s.GradeId equals g.Id
                                                       orderby dr.CreatedDate descending
                                                       select new DetailRewardViewModel
                                                       {
@@ -86,11 +87,14 @@ namespace StudenMangerServices.Implementations
                                                           Gift = dr.Gift,
                                                           DateReward = dr.DateReward,
                                                           StudentVM = _mapper.Map<StudentViewModel>(s),
-                                                          RewardVM = _mapper.Map<RewardViewModel>(r),
+                                                          Reward = _mapper.Map<RewardViewModel>(r),
+                                                          levelEnum = g.levelEnum,
                                                           CreatedDate = dr.CreatedDate,
                                                           ModifiedDate = dr.ModifiedDate,
                                                           Status = dr.Status
                                                       };
+
+            query = query.Where(x => Convert.ToInt16(x.levelEnum) < 4);
 
             if (!string.IsNullOrEmpty(pagingParams.Keyword))
             {
@@ -99,12 +103,12 @@ namespace StudenMangerServices.Implementations
                 query = query.Where(x =>
                                     x.StudentVM.Name.ToUpper().ToUnSign().Contains(keyword.ToUnSign()) ||
                                     x.StudentVM.Name.ToUpper().Contains(keyword) ||
-                                    x.RewardVM.Description.ToUpper().ToUnSign().Contains(keyword.ToUnSign()) ||
-                                    x.RewardVM.Description.ToUpper().Contains(keyword) ||
+                                    x.Reward.Description.ToUpper().ToUnSign().Contains(keyword.ToUnSign()) ||
+                                    x.Reward.Description.ToUpper().Contains(keyword) ||
                                     x.StudentVM.Code.ToUpper().ToUnSign().Contains(keyword.ToUnSign()) ||
                                     x.StudentVM.Code.ToUpper().Contains(keyword) ||
-                                    x.RewardVM.Number.ToUpper().ToUnSign().Contains(keyword.ToUnSign()) ||
-                                    x.RewardVM.Number.ToUpper().Contains(keyword));
+                                    x.Reward.Number.ToUpper().ToUnSign().Contains(keyword.ToUnSign()) ||
+                                    x.Reward.Number.ToUpper().Contains(keyword));
             }
 
             return await PagedList<DetailRewardViewModel>

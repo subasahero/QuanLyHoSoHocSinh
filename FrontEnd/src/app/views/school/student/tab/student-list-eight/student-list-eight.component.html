@@ -56,6 +56,9 @@
           <button nz-button nzType="danger" nz-tooltip nzTitle="Xóa" (click)="delete(data.id)">
             <i nz-icon nzType="delete" theme="outline"></i>
           </button>
+          <button nz-button nzType="default" nz-tooltip nzTitle="Không còn đi học" (click)="clickDinhChiHoc(data)">
+            <i nz-icon nzType="pause-circle" nzTheme="outline"></i>
+          </button>
         </nz-button-group>
       </td>
     </tr>

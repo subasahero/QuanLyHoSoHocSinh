@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NzDrawerService, NzModalService } from 'ng-zorro-antd';
 import { StudentCreateEditModalComponent } from '../../modal/student-create-edit-modal/student-create-edit-modal.component';
 import { StudentChangeGradeModalComponent } from '../../modal/student-change-grade-modal/student-change-grade-modal.component';
+import { StudentDinhChiHocModalComponent } from '../../modal/student-dinh-chi-hoc-modal/student-dinh-chi-hoc-modal.component';
 
 @Component({
   selector: 'app-student-list-six',
@@ -110,12 +111,32 @@ export class StudentListSixComponent implements OnInit {
     });
   }
 
-  update(data: Student) {
+  clickDinhChiHoc(data: any) {
+    const modal = this.modalService.create({
+      nzTitle: 'Không còn đi học',
+      nzContent: StudentDinhChiHocModalComponent,
+      nzWidth: 450,
+      nzComponentParams: {
+        studentId: data.id
+      }
+    });
+
+    modal.afterClose.subscribe(
+      (result: boolean) => {
+        if (result) {
+          this.notifyService.success("Đã chuyển hồ sơ học sinh thành công!");
+          this.loadData();
+        }
+      }
+    );
+  }
+
+  update(data: any) {
     console.log(data);
     const drawerRef = this.drawerService.create({
       nzTitle: 'Chỉnh sửa học sinh',
       nzContent: StudentCreateEditModalComponent,
-      nzWidth: 650,
+      nzWidth: 450,
       nzContentParams: {
         student: data,
         levelEnum: data.gradeVM.levelEnum,

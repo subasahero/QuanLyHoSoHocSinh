@@ -201,6 +201,25 @@ namespace Backend.Controllers
             return Ok(true);
         }
 
+        [HttpPut("DinhChiHoc")]
+        public async Task<IActionResult> DinhChiHoc(DinhChiHocViewModel model)
+        {
+            if (string.IsNullOrEmpty(model.GradeId.Value.ToString()))
+            {
+                return BadRequest();
+            }
+            try
+            {
+                await _studentService.DinhChiHocAsync(model);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+
+            return Ok(true);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid? id)
         {

@@ -30,8 +30,19 @@ namespace StudenMangerServices.ViewModel
 
         public GradeViewModel GradeVM { get; set; }
         public StudentScoreViewModel StudentScoreVM { get; set; }
-
+        public List<DetailRewardViewModel> DetailRewardVM { get; set; }
+        public List<DetailDisciplineViewModel> DetailDisciplineVM { get; set; }
         public IFormFile File { get; set; }
         //public CertificateViewModel CertificateVM { get; set; }
+
+        public DiemLopSauViewModel DiemLopSauHK1VM { get; set; }
+        public DiemLopBayViewModel DiemLopBayHK1VM { get; set; }
+        public DiemLopTamViewModel DiemLopTamHK1VM { get; set; }
+        public DiemLopChinViewModel DiemLopChinHK1VM { get; set; }
+
+        public DiemLopSauViewModel DiemLopSauHK2VM { get; set; }
+        public DiemLopBayViewModel DiemLopBayHK2VM { get; set; }
+        public DiemLopTamViewModel DiemLopTamHK2VM { get; set; }
+        public DiemLopChinViewModel DiemLopChinHK2VM { get; set; }
     }
 }

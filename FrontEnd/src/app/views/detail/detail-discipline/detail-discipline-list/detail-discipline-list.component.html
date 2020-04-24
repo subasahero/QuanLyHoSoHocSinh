@@ -37,12 +37,12 @@
     </thead>
     <tbody>
       <tr *ngFor="let data of table.data;let i = index">
-        <td>{{data.studentVM.code}}</td>
-        <td>{{data.studentVM.name}}</td>
-        <td>{{data.disciplineVM.description}}</td>
-        <td>{{data.datePunish | date:'dd/MM/yyyy'}}</td>
-        <td>{{data.reason}}</td>
-        <td>{{data.punishment}}</td>
+        <td>{{data.studentVM?.code}}</td>
+        <td>{{data.studentVM?.name}}</td>
+        <td>{{data.discipline?.description}}</td>
+        <td>{{data?.datePunish | date:'dd/MM/yyyy'}}</td>
+        <td>{{data?.reason}}</td>
+        <td>{{data?.punishment}}</td>
         <td>
           <nz-button-group>
             <button nz-button nzType="default" nz-tooltip nzTitle="Sửa" (click)="update(data)">

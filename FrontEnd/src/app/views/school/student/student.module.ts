@@ -8,6 +8,7 @@ import { StudentListEightComponent } from './tab/student-list-eight/student-list
 import { StudentListSixComponent } from './tab/student-list-six/student-list-six.component';
 import { StudentListSevenComponent } from './tab/student-list-seven/student-list-seven.component';
 import { StudentListNineComponent } from './tab/student-list-nine/student-list-nine.component';
+import { StudentDinhChiHocModalComponent } from './modal/student-dinh-chi-hoc-modal/student-dinh-chi-hoc-modal.component';
 
 const APP_MODALS = [
   StudentCreateEditModalComponent,
@@ -16,6 +17,7 @@ const APP_MODALS = [
   StudentListSevenComponent,
   StudentListEightComponent,
   StudentListNineComponent,
+  StudentDinhChiHocModalComponent
 ];
 @NgModule({
   imports: [

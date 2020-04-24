@@ -95,8 +95,8 @@ export class DetailRewardCreateEditModalComponent implements OnInit {
 
   getStudentList() {
     this.studentService.getAll().subscribe(
-      res => {
-        this.studentList = res;
+      (res: any[]) => {
+        this.studentList = res.filter(x => x.gradeVM.levelEnum <= 3);
       }
     );
   }

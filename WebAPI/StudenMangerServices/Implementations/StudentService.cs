@@ -76,6 +76,22 @@ namespace StudenMangerServices.Implementations
             await _dataContext.SaveChangesAsync();
         }
 
+        public async Task<bool> DinhChiHocAsync(DinhChiHocViewModel model)
+        {
+            try
+            {
+                Student student = await _dataContext.Students
+                                                .FirstOrDefaultAsync(x => x.Id == model.Id.Value);
+                student.GradeId = model.GradeId.Value;
+                await _dataContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public async Task<IList<StudentViewModel>> GetAllAsync()
         {
             IList<StudentViewModel> result = await (from s in _dataContext.Students
@@ -167,7 +183,207 @@ namespace StudenMangerServices.Implementations
                                           CreatedDate = m.CreatedDate,
                                           ModifiedDate = m.ModifiedDate,
                                           Status = m.Status,
-                                          StudentScoreVM = _mapper.Map<StudentScoreViewModel>(sc)
+                                          StudentScoreVM = _mapper.Map<StudentScoreViewModel>(sc),
+                                          DetailRewardVM = (from r in _dataContext.DetailRewards
+                                                            where r.StudentId == m.Id
+                                                            join rm in _dataContext.Rewards on r.RewardId equals rm.Id
+                                                            select new DetailRewardViewModel
+                                                            {
+                                                                Id = r.Id,
+                                                                StudentId = r.StudentId,
+                                                                RewardId = r.RewardId,
+                                                                Reason = r.Reason,
+                                                                Gift = r.Gift,
+                                                                DateReward = r.DateReward,
+                                                                CreatedDate = r.CreatedDate,
+                                                                ModifiedDate = r.ModifiedDate,
+                                                                Status = r.Status,
+                                                                Reward = _mapper.Map<RewardViewModel>(rm),
+                                                            }).ToList(),
+                                          DetailDisciplineVM = (from d in _dataContext.DetailDisciplines
+                                                                where d.StudentId == m.Id
+                                                                join dm in _dataContext.Disciplines on d.DisciplineId equals dm.Id
+                                                                select new DetailDisciplineViewModel
+                                                                {
+                                                                    Id = d.Id,
+                                                                    StudentId = d.StudentId,
+                                                                    DisciplineId = d.DisciplineId,
+                                                                    Reason = d.Reason,
+                                                                    Punishment = d.Punishment,
+                                                                    DatePunish = d.DatePunish,
+                                                                    CreatedDate = d.CreatedDate,
+                                                                    ModifiedDate = d.ModifiedDate,
+                                                                    Status = d.Status,
+                                                                    Discipline = _mapper.Map<DisciplineViewModel>(dm)
+                                                                }).ToList(),
+                                          DiemLopSauHK1VM = (from ls in _dataContext.DiemLopSaus
+                                                             where ls.StudentId == m.Id && ls.loai == 0
+                                                             select new DiemLopSauViewModel
+                                                             {
+                                                                 Id = ls.Id,
+                                                                 StudentId = ls.StudentId,
+                                                                 Toan = ls.Toan,
+                                                                 NguVan = ls.NguVan,
+                                                                 NgoaiNgu = ls.NgoaiNgu,
+                                                                 Tin = ls.Tin,
+                                                                 LichSu = ls.LichSu,
+                                                                 DiaLy = ls.DiaLy,
+                                                                 GiaoDucCongDan = ls.GiaoDucCongDan,
+                                                                 CongNghe = ls.CongNghe,
+                                                                 VatLy = ls.VatLy,
+                                                                 SinhHoc = ls.SinhHoc,
+                                                                 AmNhac = ls.AmNhac,
+                                                                 MyThuat = ls.MyThuat,
+                                                                 DiemTrungBinhCong = ls.DiemTrungBinhCong,
+                                                                 loai = ls.loai,
+                                                             }).AsNoTracking().FirstOrDefault(),
+                                          DiemLopBayHK1VM = (from ls in _dataContext.DiemLopBays
+                                                             where ls.StudentId == m.Id && ls.loai == 0
+                                                             select new DiemLopBayViewModel
+                                                             {
+                                                                 Id = ls.Id,
+                                                                 StudentId = ls.StudentId,
+                                                                 Toan = ls.Toan,
+                                                                 NguVan = ls.NguVan,
+                                                                 NgoaiNgu = ls.NgoaiNgu,
+                                                                 Tin = ls.Tin,
+                                                                 LichSu = ls.LichSu,
+                                                                 DiaLy = ls.DiaLy,
+                                                                 GiaoDucCongDan = ls.GiaoDucCongDan,
+                                                                 CongNghe = ls.CongNghe,
+                                                                 VatLy = ls.VatLy,
+                                                                 SinhHoc = ls.SinhHoc,
+                                                                 AmNhac = ls.AmNhac,
+                                                                 MyThuat = ls.MyThuat,
+                                                                 DiemTrungBinhCong = ls.DiemTrungBinhCong,
+                                                                 loai = ls.loai,
+                                                             }).AsNoTracking().FirstOrDefault(),
+                                          DiemLopTamHK1VM = (from ls in _dataContext.DiemLopTams
+                                                             where ls.StudentId == m.Id && ls.loai == 0
+                                                             select new DiemLopTamViewModel
+                                                             {
+                                                                 Id = ls.Id,
+                                                                 StudentId = ls.StudentId,
+                                                                 Toan = ls.Toan,
+                                                                 NguVan = ls.NguVan,
+                                                                 NgoaiNgu = ls.NgoaiNgu,
+                                                                 Tin = ls.Tin,
+                                                                 LichSu = ls.LichSu,
+                                                                 DiaLy = ls.DiaLy,
+                                                                 GiaoDucCongDan = ls.GiaoDucCongDan,
+                                                                 CongNghe = ls.CongNghe,
+                                                                 VatLy = ls.VatLy,
+                                                                 SinhHoc = ls.SinhHoc,
+                                                                 AmNhac = ls.AmNhac,
+                                                                 MyThuat = ls.MyThuat,
+                                                                 DiemTrungBinhCong = ls.DiemTrungBinhCong,
+                                                                 loai = ls.loai,
+                                                             }).AsNoTracking().FirstOrDefault(),
+                                          DiemLopChinHK1VM = (from ls in _dataContext.DiemLopChins
+                                                              where ls.StudentId == m.Id && ls.loai == 0
+                                                              select new DiemLopChinViewModel
+                                                              {
+                                                                  Id = ls.Id,
+                                                                  StudentId = ls.StudentId,
+                                                                  Toan = ls.Toan,
+                                                                  NguVan = ls.NguVan,
+                                                                  NgoaiNgu = ls.NgoaiNgu,
+                                                                  Tin = ls.Tin,
+                                                                  LichSu = ls.LichSu,
+                                                                  DiaLy = ls.DiaLy,
+                                                                  GiaoDucCongDan = ls.GiaoDucCongDan,
+                                                                  CongNghe = ls.CongNghe,
+                                                                  VatLy = ls.VatLy,
+                                                                  SinhHoc = ls.SinhHoc,
+                                                                  AmNhac = ls.AmNhac,
+                                                                  MyThuat = ls.MyThuat,
+                                                                  DiemTrungBinhCong = ls.DiemTrungBinhCong,
+                                                                  loai = ls.loai,
+                                                              }).AsNoTracking().FirstOrDefault(),
+                                          DiemLopSauHK2VM = (from ls in _dataContext.DiemLopSaus
+                                                             where ls.StudentId == m.Id && ls.loai == 1
+                                                             select new DiemLopSauViewModel
+                                                             {
+                                                                 Id = ls.Id,
+                                                                 StudentId = ls.StudentId,
+                                                                 Toan = ls.Toan,
+                                                                 NguVan = ls.NguVan,
+                                                                 NgoaiNgu = ls.NgoaiNgu,
+                                                                 Tin = ls.Tin,
+                                                                 LichSu = ls.LichSu,
+                                                                 DiaLy = ls.DiaLy,
+                                                                 GiaoDucCongDan = ls.GiaoDucCongDan,
+                                                                 CongNghe = ls.CongNghe,
+                                                                 VatLy = ls.VatLy,
+                                                                 SinhHoc = ls.SinhHoc,
+                                                                 AmNhac = ls.AmNhac,
+                                                                 MyThuat = ls.MyThuat,
+                                                                 DiemTrungBinhCong = ls.DiemTrungBinhCong,
+                                                                 loai = ls.loai,
+                                                             }).AsNoTracking().FirstOrDefault(),
+                                          DiemLopBayHK2VM = (from ls in _dataContext.DiemLopBays
+                                                             where ls.StudentId == m.Id && ls.loai == 1
+                                                             select new DiemLopBayViewModel
+                                                             {
+                                                                 Id = ls.Id,
+                                                                 StudentId = ls.StudentId,
+                                                                 Toan = ls.Toan,
+                                                                 NguVan = ls.NguVan,
+                                                                 NgoaiNgu = ls.NgoaiNgu,
+                                                                 Tin = ls.Tin,
+                                                                 LichSu = ls.LichSu,
+                                                                 DiaLy = ls.DiaLy,
+                                                                 GiaoDucCongDan = ls.GiaoDucCongDan,
+                                                                 CongNghe = ls.CongNghe,
+                                                                 VatLy = ls.VatLy,
+                                                                 SinhHoc = ls.SinhHoc,
+                                                                 AmNhac = ls.AmNhac,
+                                                                 MyThuat = ls.MyThuat,
+                                                                 DiemTrungBinhCong = ls.DiemTrungBinhCong,
+                                                                 loai = ls.loai,
+                                                             }).AsNoTracking().FirstOrDefault(),
+                                          DiemLopTamHK2VM = (from ls in _dataContext.DiemLopTams
+                                                             where ls.StudentId == m.Id && ls.loai == 1
+                                                             select new DiemLopTamViewModel
+                                                             {
+                                                                 Id = ls.Id,
+                                                                 StudentId = ls.StudentId,
+                                                                 Toan = ls.Toan,
+                                                                 NguVan = ls.NguVan,
+                                                                 NgoaiNgu = ls.NgoaiNgu,
+                                                                 Tin = ls.Tin,
+                                                                 LichSu = ls.LichSu,
+                                                                 DiaLy = ls.DiaLy,
+                                                                 GiaoDucCongDan = ls.GiaoDucCongDan,
+                                                                 CongNghe = ls.CongNghe,
+                                                                 VatLy = ls.VatLy,
+                                                                 SinhHoc = ls.SinhHoc,
+                                                                 AmNhac = ls.AmNhac,
+                                                                 MyThuat = ls.MyThuat,
+                                                                 DiemTrungBinhCong = ls.DiemTrungBinhCong,
+                                                                 loai = ls.loai,
+                                                             }).AsNoTracking().FirstOrDefault(),
+                                          DiemLopChinHK2VM = (from ls in _dataContext.DiemLopChins
+                                                              where ls.StudentId == m.Id && ls.loai == 1
+                                                              select new DiemLopChinViewModel
+                                                              {
+                                                                  Id = ls.Id,
+                                                                  StudentId = ls.StudentId,
+                                                                  Toan = ls.Toan,
+                                                                  NguVan = ls.NguVan,
+                                                                  NgoaiNgu = ls.NgoaiNgu,
+                                                                  Tin = ls.Tin,
+                                                                  LichSu = ls.LichSu,
+                                                                  DiaLy = ls.DiaLy,
+                                                                  GiaoDucCongDan = ls.GiaoDucCongDan,
+                                                                  CongNghe = ls.CongNghe,
+                                                                  VatLy = ls.VatLy,
+                                                                  SinhHoc = ls.SinhHoc,
+                                                                  AmNhac = ls.AmNhac,
+                                                                  MyThuat = ls.MyThuat,
+                                                                  DiemTrungBinhCong = ls.DiemTrungBinhCong,
+                                                                  loai = ls.loai,
+                                                              }).AsNoTracking().FirstOrDefault(),
                                       }).FirstOrDefault();
 
             return query;
@@ -179,6 +395,18 @@ namespace StudenMangerServices.Implementations
                                             .AsNoTracking()
                                             .FirstOrDefaultAsync(x => x.Id == id);
             StudentViewModel result = _mapper.Map<StudentViewModel>(student);
+            result.DetailRewardVM = await _dataContext.DetailRewards
+                                                    .AsNoTracking()
+                                                    .Where(x => x.StudentId == student.Id)
+                                                    .Include(x => x.Reward)
+                                                    .ProjectTo<DetailRewardViewModel>(_mapper.ConfigurationProvider)
+                                                    .ToListAsync();
+            result.DetailDisciplineVM = await _dataContext.DetailDisciplines
+                                                    .AsNoTracking()
+                                                    .Where(x => x.StudentId == student.Id)
+                                                    .Include(x => x.Discipline)
+                                                    .ProjectTo<DetailDisciplineViewModel>(_mapper.ConfigurationProvider)
+                                                    .ToListAsync();
             return result;
         }
 
@@ -188,6 +416,8 @@ namespace StudenMangerServices.Implementations
                                                     join g in _dataContext.Grades on s.GradeId equals g.Id
                                                    //join c in _dataContext.Certificates on s.Id equals c.StudentId into tmpCertificates
                                                    //from c in tmpCertificates.DefaultIfEmpty()
+                                                   //join r in _dataContext.DetailRewards on s.Id equals r.StudentId into tmpDetailRewards
+                                                   //from r in tmpDetailRewards.DefaultIfEmpty()
                                                    orderby s.Name
                                                     select new StudentViewModel
                                                     {
@@ -206,6 +436,36 @@ namespace StudenMangerServices.Implementations
                                                         ModifiedDate = s.ModifiedDate,
                                                         Status = s.Status,
                                                         GradeVM = _mapper.Map<GradeViewModel>(g),
+                                                        DetailRewardVM = (from r in _dataContext.DetailRewards
+                                                                          where r.StudentId == s.Id
+                                                                          join rm in _dataContext.Rewards on r.RewardId equals rm.Id
+                                                                          select new DetailRewardViewModel {
+                                                                              Id = r.Id,
+                                                                              StudentId = r.StudentId,
+                                                                              RewardId = r.RewardId,
+                                                                              Reason = r.Reason,
+                                                                              Gift = r.Gift,
+                                                                              DateReward = r.DateReward,
+                                                                              CreatedDate = r.CreatedDate,
+                                                                              ModifiedDate = r.ModifiedDate,
+                                                                              Status = r.Status,
+                                                                              Reward = _mapper.Map<RewardViewModel>(rm),
+                                                                          }).ToList(),
+                                                        DetailDisciplineVM = (from d in _dataContext.DetailDisciplines
+                                                                              where d.StudentId == d.Id
+                                                                              join dm in _dataContext.Disciplines on d.DisciplineId equals dm.Id
+                                                                              select new DetailDisciplineViewModel {
+                                                                                  Id = d.Id,
+                                                                                  StudentId = d.StudentId,
+                                                                                  DisciplineId = d.DisciplineId,
+                                                                                  Reason = d.Reason,
+                                                                                  Punishment = d.Punishment,
+                                                                                  DatePunish = d.DatePunish,
+                                                                                  CreatedDate = d.CreatedDate,
+                                                                                  ModifiedDate = d.ModifiedDate,
+                                                                                  Status = d.Status,
+                                                                                  Discipline = _mapper.Map<DisciplineViewModel>(dm)
+                                                                              }).ToList()
                                                         //CertificateVM = _mapper.Map<CertificateViewModel>(c)
                                                     }).ToListAsync();
             result = result.Where(x => x.GradeVM.levelEnum == levelEnum).ToList();
@@ -219,8 +479,8 @@ namespace StudenMangerServices.Implementations
                                                  join g in _dataContext.Grades on s.GradeId equals g.Id
                                                  join c in _dataContext.StudentScores on s.Id equals c.StudentId into tmpStudentScores
                                                  from c in tmpStudentScores.DefaultIfEmpty()
-                                                 //join cc in _dataContext.Certificates on s.Id equals cc.StudentId into tmpCertificates
-                                                 //from cc in tmpCertificates.DefaultIfEmpty()
+                                                     //join cc in _dataContext.Certificates on s.Id equals cc.StudentId into tmpCertificates
+                                                     //from cc in tmpCertificates.DefaultIfEmpty()
                                                  select new StudentViewModel
                                                  {
                                                      Id = s.Id,
@@ -237,6 +497,174 @@ namespace StudenMangerServices.Implementations
                                                      GradeVM = _mapper.Map<GradeViewModel>(g),
                                                      StudentScoreVM = _mapper.Map<StudentScoreViewModel>(c),
                                                      //CertificateVM = _mapper.Map<CertificateViewModel>(cc),
+                                                     DiemLopSauHK1VM = (from ls in _dataContext.DiemLopSaus
+                                                                        where ls.StudentId == s.Id && ls.loai == 0
+                                                                        select new DiemLopSauViewModel
+                                                                        {
+                                                                            Id = ls.Id,
+                                                                            StudentId = ls.StudentId,
+                                                                            Toan = ls.Toan,
+                                                                            NguVan = ls.NguVan,
+                                                                            NgoaiNgu = ls.NgoaiNgu,
+                                                                            Tin = ls.Tin,
+                                                                            LichSu = ls.LichSu,
+                                                                            DiaLy = ls.DiaLy,
+                                                                            GiaoDucCongDan = ls.GiaoDucCongDan,
+                                                                            CongNghe = ls.CongNghe,
+                                                                            VatLy = ls.VatLy,
+                                                                            SinhHoc = ls.SinhHoc,
+                                                                            AmNhac = ls.AmNhac,
+                                                                            MyThuat = ls.MyThuat,
+                                                                            DiemTrungBinhCong = ls.DiemTrungBinhCong,
+                                                                            loai = ls.loai,
+                                                                        }).AsNoTracking().FirstOrDefault(),
+                                                     DiemLopBayHK1VM = (from ls in _dataContext.DiemLopBays
+                                                                        where ls.StudentId == s.Id && ls.loai == 0
+                                                                        select new DiemLopBayViewModel
+                                                                        {
+                                                                            Id = ls.Id,
+                                                                            StudentId = ls.StudentId,
+                                                                            Toan = ls.Toan,
+                                                                            NguVan = ls.NguVan,
+                                                                            NgoaiNgu = ls.NgoaiNgu,
+                                                                            Tin = ls.Tin,
+                                                                            LichSu = ls.LichSu,
+                                                                            DiaLy = ls.DiaLy,
+                                                                            GiaoDucCongDan = ls.GiaoDucCongDan,
+                                                                            CongNghe = ls.CongNghe,
+                                                                            VatLy = ls.VatLy,
+                                                                            SinhHoc = ls.SinhHoc,
+                                                                            AmNhac = ls.AmNhac,
+                                                                            MyThuat = ls.MyThuat,
+                                                                            DiemTrungBinhCong = ls.DiemTrungBinhCong,
+                                                                            loai = ls.loai,
+                                                                        }).AsNoTracking().FirstOrDefault(),
+                                                     DiemLopTamHK1VM = (from ls in _dataContext.DiemLopTams
+                                                                        where ls.StudentId == s.Id && ls.loai == 0
+                                                                        select new DiemLopTamViewModel
+                                                                        {
+                                                                            Id = ls.Id,
+                                                                            StudentId = ls.StudentId,
+                                                                            Toan = ls.Toan,
+                                                                            NguVan = ls.NguVan,
+                                                                            NgoaiNgu = ls.NgoaiNgu,
+                                                                            Tin = ls.Tin,
+                                                                            LichSu = ls.LichSu,
+                                                                            DiaLy = ls.DiaLy,
+                                                                            GiaoDucCongDan = ls.GiaoDucCongDan,
+                                                                            CongNghe = ls.CongNghe,
+                                                                            VatLy = ls.VatLy,
+                                                                            SinhHoc = ls.SinhHoc,
+                                                                            AmNhac = ls.AmNhac,
+                                                                            MyThuat = ls.MyThuat,
+                                                                            DiemTrungBinhCong = ls.DiemTrungBinhCong,
+                                                                            loai = ls.loai,
+                                                                        }).AsNoTracking().FirstOrDefault(),
+                                                     DiemLopChinHK1VM = (from ls in _dataContext.DiemLopChins
+                                                                        where ls.StudentId == s.Id && ls.loai == 0
+                                                                        select new DiemLopChinViewModel
+                                                                        {
+                                                                            Id = ls.Id,
+                                                                            StudentId = ls.StudentId,
+                                                                            Toan = ls.Toan,
+                                                                            NguVan = ls.NguVan,
+                                                                            NgoaiNgu = ls.NgoaiNgu,
+                                                                            Tin = ls.Tin,
+                                                                            LichSu = ls.LichSu,
+                                                                            DiaLy = ls.DiaLy,
+                                                                            GiaoDucCongDan = ls.GiaoDucCongDan,
+                                                                            CongNghe = ls.CongNghe,
+                                                                            VatLy = ls.VatLy,
+                                                                            SinhHoc = ls.SinhHoc,
+                                                                            AmNhac = ls.AmNhac,
+                                                                            MyThuat = ls.MyThuat,
+                                                                            DiemTrungBinhCong = ls.DiemTrungBinhCong,
+                                                                            loai = ls.loai,
+                                                                        }).AsNoTracking().FirstOrDefault(),
+                                                     DiemLopSauHK2VM = (from ls in _dataContext.DiemLopSaus
+                                                                        where ls.StudentId == s.Id && ls.loai == 1
+                                                                        select new DiemLopSauViewModel
+                                                                        {
+                                                                            Id = ls.Id,
+                                                                            StudentId = ls.StudentId,
+                                                                            Toan = ls.Toan,
+                                                                            NguVan = ls.NguVan,
+                                                                            NgoaiNgu = ls.NgoaiNgu,
+                                                                            Tin = ls.Tin,
+                                                                            LichSu = ls.LichSu,
+                                                                            DiaLy = ls.DiaLy,
+                                                                            GiaoDucCongDan = ls.GiaoDucCongDan,
+                                                                            CongNghe = ls.CongNghe,
+                                                                            VatLy = ls.VatLy,
+                                                                            SinhHoc = ls.SinhHoc,
+                                                                            AmNhac = ls.AmNhac,
+                                                                            MyThuat = ls.MyThuat,
+                                                                            DiemTrungBinhCong = ls.DiemTrungBinhCong,
+                                                                            loai = ls.loai,
+                                                                        }).AsNoTracking().FirstOrDefault(),
+                                                     DiemLopBayHK2VM = (from ls in _dataContext.DiemLopBays
+                                                                        where ls.StudentId == s.Id && ls.loai == 1
+                                                                        select new DiemLopBayViewModel
+                                                                        {
+                                                                            Id = ls.Id,
+                                                                            StudentId = ls.StudentId,
+                                                                            Toan = ls.Toan,
+                                                                            NguVan = ls.NguVan,
+                                                                            NgoaiNgu = ls.NgoaiNgu,
+                                                                            Tin = ls.Tin,
+                                                                            LichSu = ls.LichSu,
+                                                                            DiaLy = ls.DiaLy,
+                                                                            GiaoDucCongDan = ls.GiaoDucCongDan,
+                                                                            CongNghe = ls.CongNghe,
+                                                                            VatLy = ls.VatLy,
+                                                                            SinhHoc = ls.SinhHoc,
+                                                                            AmNhac = ls.AmNhac,
+                                                                            MyThuat = ls.MyThuat,
+                                                                            DiemTrungBinhCong = ls.DiemTrungBinhCong,
+                                                                            loai = ls.loai,
+                                                                        }).AsNoTracking().FirstOrDefault(),
+                                                     DiemLopTamHK2VM = (from ls in _dataContext.DiemLopTams
+                                                                        where ls.StudentId == s.Id && ls.loai == 1
+                                                                        select new DiemLopTamViewModel
+                                                                        {
+                                                                            Id = ls.Id,
+                                                                            StudentId = ls.StudentId,
+                                                                            Toan = ls.Toan,
+                                                                            NguVan = ls.NguVan,
+                                                                            NgoaiNgu = ls.NgoaiNgu,
+                                                                            Tin = ls.Tin,
+                                                                            LichSu = ls.LichSu,
+                                                                            DiaLy = ls.DiaLy,
+                                                                            GiaoDucCongDan = ls.GiaoDucCongDan,
+                                                                            CongNghe = ls.CongNghe,
+                                                                            VatLy = ls.VatLy,
+                                                                            SinhHoc = ls.SinhHoc,
+                                                                            AmNhac = ls.AmNhac,
+                                                                            MyThuat = ls.MyThuat,
+                                                                            DiemTrungBinhCong = ls.DiemTrungBinhCong,
+                                                                            loai = ls.loai,
+                                                                        }).AsNoTracking().FirstOrDefault(),
+                                                     DiemLopChinHK2VM = (from ls in _dataContext.DiemLopChins
+                                                                         where ls.StudentId == s.Id && ls.loai == 1
+                                                                         select new DiemLopChinViewModel
+                                                                         {
+                                                                             Id = ls.Id,
+                                                                             StudentId = ls.StudentId,
+                                                                             Toan = ls.Toan,
+                                                                             NguVan = ls.NguVan,
+                                                                             NgoaiNgu = ls.NgoaiNgu,
+                                                                             Tin = ls.Tin,
+                                                                             LichSu = ls.LichSu,
+                                                                             DiaLy = ls.DiaLy,
+                                                                             GiaoDucCongDan = ls.GiaoDucCongDan,
+                                                                             CongNghe = ls.CongNghe,
+                                                                             VatLy = ls.VatLy,
+                                                                             SinhHoc = ls.SinhHoc,
+                                                                             AmNhac = ls.AmNhac,
+                                                                             MyThuat = ls.MyThuat,
+                                                                             DiemTrungBinhCong = ls.DiemTrungBinhCong,
+                                                                             loai = ls.loai,
+                                                                         }).AsNoTracking().FirstOrDefault(),
                                                      CreatedDate = s.CreatedDate,
                                                      ModifiedDate = s.ModifiedDate,
                                                      Status = s.Status

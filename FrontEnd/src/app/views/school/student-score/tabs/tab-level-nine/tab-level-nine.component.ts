@@ -11,6 +11,8 @@ import { ActivatedRoute } from '@angular/router';
 import { NzDrawerService, NzModalService } from 'ng-zorro-antd';
 import { AddEditStudentScoreModalComponent } from '../../modals/add-edit-student-score-modal/add-edit-student-score-modal.component';
 import { NextLevelStudentComponent } from '../../modals/add-edit-student-score-modal/next-level-student/next-level-student.component';
+import { ViewDiemTheoLopComponent } from '../../modals/view-diem-theo-lop/view-diem-theo-lop.component';
+import { AddEditDiemLopSauComponent } from '../../modals/add-edit-diem-lop-sau/add-edit-diem-lop-sau.component';
 
 @Component({
   selector: 'app-tab-level-nine',
@@ -75,14 +77,13 @@ export class TabLevelNineComponent implements OnInit {
       });
   }
 
-  addNew(data: Student) {
+  view61(data: any) {
     const drawerRef = this.drawerService.create({
-      nzTitle: 'Thêm mới bảng điểm',
-      nzContent: AddEditStudentScoreModalComponent,
+      nzTitle: 'Xem bảng điểm',
+      nzContent: ViewDiemTheoLopComponent,
       nzWidth: 650,
       nzContentParams: {
-        student: data,
-        isAddNew: true
+        diemData: data.diemLopSauHK1VM,
       }
     });
 
@@ -91,14 +92,147 @@ export class TabLevelNineComponent implements OnInit {
     });
   }
 
-  update(data: Student) {
+  view62(data: any) {
     const drawerRef = this.drawerService.create({
-      nzTitle: 'Cập nhật bảng điểm',
-      nzContent: AddEditStudentScoreModalComponent,
+      nzTitle: 'Xem bảng điểm',
+      nzContent: ViewDiemTheoLopComponent,
+      nzWidth: 650,
+      nzContentParams: {
+        diemData: data.diemLopSauHK2VM,
+      }
+    });
+
+    drawerRef.afterClose.subscribe(() => {
+      this.loadData();
+    });
+  }
+
+  view71(data: any) {
+    const drawerRef = this.drawerService.create({
+      nzTitle: 'Xem bảng điểm',
+      nzContent: ViewDiemTheoLopComponent,
+      nzWidth: 650,
+      nzContentParams: {
+        diemData: data.diemLopBayHK1VM,
+      }
+    });
+
+    drawerRef.afterClose.subscribe(() => {
+      this.loadData();
+    });
+  }
+
+  view72(data: any) {
+    const drawerRef = this.drawerService.create({
+      nzTitle: 'Xem bảng điểm',
+      nzContent: ViewDiemTheoLopComponent,
+      nzWidth: 650,
+      nzContentParams: {
+        diemData: data.diemLopBayHK2VM,
+      }
+    });
+
+    drawerRef.afterClose.subscribe(() => {
+      this.loadData();
+    });
+  }
+
+  view81(data: any) {
+    const drawerRef = this.drawerService.create({
+      nzTitle: 'Xem bảng điểm',
+      nzContent: ViewDiemTheoLopComponent,
+      nzWidth: 650,
+      nzContentParams: {
+        diemData: data.diemLopTamHK1VM,
+      }
+    });
+
+    drawerRef.afterClose.subscribe(() => {
+      this.loadData();
+    });
+  }
+
+  view82(data: any) {
+    const drawerRef = this.drawerService.create({
+      nzTitle: 'Xem bảng điểm',
+      nzContent: ViewDiemTheoLopComponent,
+      nzWidth: 650,
+      nzContentParams: {
+        diemData: data.diemLopTamHK2VM,
+      }
+    });
+
+    drawerRef.afterClose.subscribe(() => {
+      this.loadData();
+    });
+  }
+
+  addNew91(data: any) {
+    const drawerRef = this.drawerService.create({
+      nzTitle: 'Thêm mới bảng điểm',
+      nzContent: AddEditDiemLopSauComponent,
       nzWidth: 650,
       nzContentParams: {
         student: data,
-        isAddNew: false
+        isAddNew: true,
+        loaiHocKy: 0,
+        khoiData: 9,
+        bangDiemData: {},
+      }
+    });
+
+    drawerRef.afterClose.subscribe(() => {
+      this.loadData();
+    });
+  }
+
+  addNew92(data: any) {
+    const drawerRef = this.drawerService.create({
+      nzTitle: 'Thêm mới bảng điểm',
+      nzContent: AddEditDiemLopSauComponent,
+      nzWidth: 650,
+      nzContentParams: {
+        student: data,
+        isAddNew: true,
+        loaiHocKy: 1,
+        khoiData: 9,
+        bangDiemData: {},
+      }
+    });
+
+    drawerRef.afterClose.subscribe(() => {
+      this.loadData();
+    });
+  }
+  
+
+  update91(data: any) {
+    const drawerRef = this.drawerService.create({
+      nzTitle: 'Cập nhật bảng điểm',
+      nzContent: AddEditDiemLopSauComponent,
+      nzWidth: 650,
+      nzContentParams: {
+        student: data,
+        isAddNew: false,
+        bangDiemData: data.diemLopChinHK1VM,
+        khoiData: 9,
+      }
+    });
+    drawerRef.afterClose.subscribe(() => {
+      this.loadData();
+    });
+  }
+
+  update92(data: any) {
+    const drawerRef = this.drawerService.create({
+      nzTitle: 'Cập nhật bảng điểm',
+      nzContent: AddEditDiemLopSauComponent,
+      nzWidth: 650,
+      nzContentParams: {
+        student: data,
+        isAddNew: false,
+        bangDiemData: data.diemLopChinHK2VM,
+        khoiData: 9,
       }
     });
     drawerRef.afterClose.subscribe(() => {

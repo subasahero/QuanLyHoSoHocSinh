@@ -8,6 +8,8 @@ import { TabLevelEightComponent } from './tabs/tab-level-eight/tab-level-eight.c
 import { AddEditStudentScoreModalComponent } from './modals/add-edit-student-score-modal/add-edit-student-score-modal.component';
 import { TabLevelNineComponent } from './tabs/tab-level-nine/tab-level-nine.component';
 import { NextLevelStudentComponent } from './modals/add-edit-student-score-modal/next-level-student/next-level-student.component';
+import { AddEditDiemLopSauComponent } from './modals/add-edit-diem-lop-sau/add-edit-diem-lop-sau.component';
+import { ViewDiemTheoLopComponent } from './modals/view-diem-theo-lop/view-diem-theo-lop.component';
 
 const APP_MODALS = [
   AddEditStudentScoreModalComponent,
@@ -16,6 +18,8 @@ const APP_MODALS = [
   TabLevelSevenComponent,
   TabLevelEightComponent,
   TabLevelNineComponent,
+  AddEditDiemLopSauComponent,
+  ViewDiemTheoLopComponent
 ];
 @NgModule({
   imports: [

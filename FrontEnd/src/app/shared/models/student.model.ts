@@ -19,4 +19,6 @@ export interface Student {
     gradeVM?: Grade;
     studentScoreVM?: StudentScore;
     certificateVM?: Certificate;
+    detailRewardVM?: any[];
+    detailDisciplineVM?: any[];
 }

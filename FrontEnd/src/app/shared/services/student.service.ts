@@ -74,8 +74,8 @@ export class StudentService {
   }
 
   // tslint:disable-next-line: max-line-length
-  GetStudentByLevelPaging(page?: any, itemsPerPage?: any, levelEnum?: any, pagingParams?: PagingParams): Observable<PaginatedResult<Student[]>> {
-    const paginatedResult = new PaginatedResult<Student[]>();
+  GetStudentByLevelPaging(page?: any, itemsPerPage?: any, levelEnum?: any, pagingParams?: PagingParams): Observable<PaginatedResult<any[]>> {
+    const paginatedResult = new PaginatedResult<any[]>();
 
     let params = new HttpParams();
 
@@ -94,7 +94,7 @@ export class StudentService {
       params = params.append('gradeId', pagingParams.gradeId);
     }
 
-    return this.http.get<Student[]>(this.baseUrl + 'Student/GetStudentByLevelPaging/' + levelEnum, { observe: 'response', params })
+    return this.http.get<any[]>(this.baseUrl + 'Student/GetStudentByLevelPaging/' + levelEnum, { observe: 'response', params })
       .pipe(
         map(response => {
           paginatedResult.result = response.body;
@@ -120,6 +120,10 @@ export class StudentService {
 
   update(data: any) {
     return this.http.put(this.baseUrl + 'Student', data);
+  }
+
+  DinhChiHoc(data: any) {
+    return this.http.put(this.baseUrl + 'Student/DinhChiHoc', data);
   }
 
   delete(id: any) {

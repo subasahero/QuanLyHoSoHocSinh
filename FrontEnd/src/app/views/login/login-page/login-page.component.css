@@ -28,4 +28,14 @@
     margin: auto;
 }
 
+#logo-text {
+    font-family: 'Anton', sans-serif;
+    font-weight: 700;
+    font-size: 40px;
+    text-align: center;
+    color: #0aa679;
+    margin-top: 100px;
+    margin-bottom: 50px;
+}
+
   

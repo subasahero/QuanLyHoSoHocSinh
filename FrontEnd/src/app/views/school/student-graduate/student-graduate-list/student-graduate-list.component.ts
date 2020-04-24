@@ -51,7 +51,7 @@ export class StudentGraduateListComponent implements OnInit {
     this.getListLopTotNghiep(4);
     this.loading = true;
     this.studentService.GetStudentByLevelPaging(this.pageNumber, this.pageSize, '4').subscribe(
-      (res: PaginatedResult<Student[]>) => {
+      (res: PaginatedResult<any[]>) => {
         this.loading = false;
         this.pagination = res.pagination;
         this.dataSet = res.result;
@@ -86,7 +86,7 @@ export class StudentGraduateListComponent implements OnInit {
     }
     this.loading = true;
     this.studentService.GetStudentByLevelPaging(pagination.currentPage, pagination.itemsPerPage, '4', this.pagingParams)
-      .subscribe((res: PaginatedResult<Student[]>) => {
+      .subscribe((res: PaginatedResult<any[]>) => {
         this.loading = false;
         this.pagination = res.pagination;
         this.dataSet = res.result;

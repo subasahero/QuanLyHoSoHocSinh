@@ -1,13 +1,13 @@
 <nz-layout id="container">
   <nz-sider nzTheme="light" nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
     <div class="logo-container">
-      <ng-container *ngIf="isCollapsed == false;else templateLogo">
+      <!-- <ng-container *ngIf="isCollapsed == false;else templateLogo">
         <img src="assets/dhhp-logo.png" alt="logo-image" style="margin: 5px 0 0px 10px;">
         <span class="text-logo">ĐH Hải Phòng</span>
       </ng-container>
       <ng-template #templateLogo>
         <img src="assets/dhhp-logo.png" alt="logo-image" style="margin: 5px 15px;">
-      </ng-template>
+      </ng-template> -->
     </div>
     <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
       <li nz-submenu nzTitle="Người dùng" nzIcon="user" *ngIf="roleUser.role === 'Admin'">
@@ -36,14 +36,19 @@
               Điểm học sinh
             </a>
           </li>
-          <li nz-menu-item>
+          <!-- <li nz-menu-item>
             <a [routerLink]="['/truong-hoc/chung-chi-nghe/danh-sach']">
               Chứng chỉ nghề
             </a>
-          </li>
+          </li> -->
           <li nz-menu-item>
             <a [routerLink]="['/truong-hoc/hoc-sinh-da-tot-nghiep/danh-sach']">
               HS tốt nghiệp
+            </a>
+          </li>
+          <li nz-menu-item>
+            <a [routerLink]="['/truong-hoc/hoc-sinh-bo-hoc/danh-sach']">
+              HS bỏ học
             </a>
           </li>
         </ul>

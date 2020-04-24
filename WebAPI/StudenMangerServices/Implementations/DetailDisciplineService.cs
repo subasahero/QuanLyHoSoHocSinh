@@ -63,7 +63,7 @@ namespace StudenMangerServices.Implementations
                                                             Reason = d.Reason,
                                                             Punishment = d.Punishment,
                                                             StudentVM = _mapper.Map<StudentViewModel>(s),
-                                                            DisciplineVM = _mapper.Map<DisciplineViewModel>(r),
+                                                            Discipline = _mapper.Map<DisciplineViewModel>(r),
                                                             CreatedDate = d.CreatedDate,
                                                             ModifiedDate = d.ModifiedDate,
                                                             Status = d.Status
@@ -76,6 +76,7 @@ namespace StudenMangerServices.Implementations
             IQueryable<DetailDisciplineViewModel> query = from dd in _dataContext.DetailDisciplines 
                                                           join s in _dataContext.Students on dd.StudentId equals s.Id
                                                           join d in _dataContext.Disciplines on dd.DisciplineId equals d.Id
+                                                          join g in _dataContext.Grades on s.GradeId equals g.Id
                                                           orderby dd.CreatedDate descending
                                                           select new DetailDisciplineViewModel
                                                           {
@@ -86,11 +87,14 @@ namespace StudenMangerServices.Implementations
                                                               Punishment = dd.Punishment,
                                                               DatePunish = dd.DatePunish,
                                                               StudentVM = _mapper.Map<StudentViewModel>(s),
-                                                              DisciplineVM = _mapper.Map<DisciplineViewModel>(d),
+                                                              Discipline = _mapper.Map<DisciplineViewModel>(d),
+                                                              levelEnum = g.levelEnum,
                                                               CreatedDate = dd.CreatedDate,
                                                               ModifiedDate = dd.ModifiedDate,
                                                               Status = dd.Status
                                                           };
+
+            query = query.Where(x => Convert.ToInt16(x.levelEnum) < 4);
 
             if (!string.IsNullOrEmpty(pagingParams.Keyword))
             {
@@ -99,12 +103,12 @@ namespace StudenMangerServices.Implementations
                 query = query.Where(x =>
                                     x.StudentVM.Name.ToUpper().ToUnSign().Contains(keyword.ToUnSign()) ||
                                     x.StudentVM.Name.ToUpper().Contains(keyword) ||
-                                    x.DisciplineVM.Description.ToUpper().ToUnSign().Contains(keyword.ToUnSign()) ||
-                                    x.DisciplineVM.Description.ToUpper().Contains(keyword) ||
+                                    x.Discipline.Description.ToUpper().ToUnSign().Contains(keyword.ToUnSign()) ||
+                                    x.Discipline.Description.ToUpper().Contains(keyword) ||
                                     x.StudentVM.Code.ToUpper().ToUnSign().Contains(keyword.ToUnSign()) ||
                                     x.StudentVM.Code.ToUpper().Contains(keyword) ||
-                                    x.DisciplineVM.Number.ToUpper().ToUnSign().Contains(keyword.ToUnSign()) ||
-                                    x.DisciplineVM.Number.ToUpper().Contains(keyword));
+                                    x.Discipline.Number.ToUpper().ToUnSign().Contains(keyword.ToUnSign()) ||
+                                    x.Discipline.Number.ToUpper().Contains(keyword));
             }
 
             return await PagedList<DetailDisciplineViewModel>

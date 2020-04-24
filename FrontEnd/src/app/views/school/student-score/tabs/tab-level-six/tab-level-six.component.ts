@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NzDrawerService, NzModalService } from 'ng-zorro-antd';
 import { AddEditStudentScoreModalComponent } from '../../modals/add-edit-student-score-modal/add-edit-student-score-modal.component';
 import { NextLevelStudentComponent } from '../../modals/add-edit-student-score-modal/next-level-student/next-level-student.component';
+import { AddEditDiemLopSauComponent } from '../../modals/add-edit-diem-lop-sau/add-edit-diem-lop-sau.component';
 @Component({
   selector: 'app-tab-level-six',
   templateUrl: './tab-level-six.component.html',
@@ -19,6 +20,7 @@ import { NextLevelStudentComponent } from '../../modals/add-edit-student-score-m
 export class TabLevelSixComponent implements OnInit {
   pageNumber = ConfigConstant.PAGE_INDEX;
   pageSize = ConfigConstant.PAGE_SIZE;
+  diemTrungBinh: any;
   dataSet = [];
   loading = true;
   sortValue = null;
@@ -45,11 +47,11 @@ export class TabLevelSixComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.studentService.GetStudentByLevelPaging(this.pageNumber, this.pageSize, '0').subscribe(
-      (res: PaginatedResult<Student[]>) => {
+      (res: PaginatedResult<any[]>) => {
         this.loading = false;
         this.pagination = res.pagination;
         this.dataSet = res.result;
-        console.log(this.dataSet);
+        //this.getDiemTrungBinhCong(this.dataSet);
       }
     );
   }
@@ -67,21 +69,25 @@ export class TabLevelSixComponent implements OnInit {
     }
     this.loading = true;
     this.studentService.GetStudentByLevelPaging(pagination.currentPage, pagination.itemsPerPage, '0', this.pagingParams)
-      .subscribe((res: PaginatedResult<Student[]>) => {
+      .subscribe((res: PaginatedResult<any[]>) => {
         this.loading = false;
         this.pagination = res.pagination;
         this.dataSet = res.result;
+        //this.getDiemTrungBinhCong(this.dataSet);
       });
   }
 
-  addNew(data: Student) {
+  addNew61(data: any) {
     const drawerRef = this.drawerService.create({
       nzTitle: 'Thêm mới bảng điểm',
-      nzContent: AddEditStudentScoreModalComponent,
+      nzContent: AddEditDiemLopSauComponent,
       nzWidth: 650,
       nzContentParams: {
         student: data,
-        isAddNew: true
+        isAddNew: true,
+        loaiHocKy: 0,
+        khoiData: 6,
+        bangDiemData: {},
       }
     });
 
@@ -90,20 +96,60 @@ export class TabLevelSixComponent implements OnInit {
     });
   }
 
-  update(data: Student) {
+  addNew62(data: any) {
+    const drawerRef = this.drawerService.create({
+      nzTitle: 'Thêm mới bảng điểm',
+      nzContent: AddEditDiemLopSauComponent,
+      nzWidth: 650,
+      nzContentParams: {
+        student: data,
+        isAddNew: true,
+        loaiHocKy: 1,
+        khoiData: 6,
+        bangDiemData: {},
+      }
+    });
+
+    drawerRef.afterClose.subscribe(() => {
+      this.loadData();
+    });
+  }
+
+
+  update61(data: any) {
     const drawerRef = this.drawerService.create({
       nzTitle: 'Cập nhật bảng điểm',
-      nzContent: AddEditStudentScoreModalComponent,
+      nzContent: AddEditDiemLopSauComponent,
       nzWidth: 650,
       nzContentParams: {
         student: data,
-        isAddNew: false
+        isAddNew: false,
+        bangDiemData: data.diemLopSauHK1VM,
+        khoiData: 6,
       }
     });
     drawerRef.afterClose.subscribe(() => {
       this.loadData();
     });
   }
+
+  update62(data: any) {
+    const drawerRef = this.drawerService.create({
+      nzTitle: 'Cập nhật bảng điểm',
+      nzContent: AddEditDiemLopSauComponent,
+      nzWidth: 650,
+      nzContentParams: {
+        student: data,
+        isAddNew: false,
+        bangDiemData: data.diemLopSauHK2VM,
+        khoiData: 6,
+      }
+    });
+    drawerRef.afterClose.subscribe(() => {
+      this.loadData();
+    });
+  }
+
 
   search(keyword: string) {
     this.pagingParams.keyword = keyword;
@@ -133,25 +179,42 @@ export class TabLevelSixComponent implements OnInit {
     }, 'Đồng ý', 'Hủy bỏ', () => false);
   }
 
-  nextLevel(data: Student) {
-    const listChangeStudent = [data.id];
-    const modal = this.modalService.create({
-      nzTitle: 'Lên lớp',
-      nzContent: NextLevelStudentComponent,
-      nzWidth: 450,
-      nzComponentParams: {
-        levelEnum: data.gradeVM.levelEnum,
-        studentsId: listChangeStudent
-      }
-    });
+  getDiemTrungBinhCong(data: any) {
+    if (data.diemLopSauHK1VM !== null && data.diemLopSauHK2VM !== null) {
+      return this.diemTrungBinh == 0;
+    } else {
+      let diemLopSauHK1VM = data.diemLopSauHK1VM !== null ? data.diemLopSauHK1VM.diemTrungBinhCong : 0;
+      let diemLopSauHK2VM = data.diemLopSauHK2VM !== null ? data.diemLopSauHK2VM.diemTrungBinhCong : 0;
+      return this.diemTrungBinh = (diemLopSauHK1VM + diemLopSauHK2VM) / 2;
+    }
+  }
 
-    modal.afterClose.subscribe(
-      (result: boolean) => {
-        if (result) {
-          this.notifyService.success(ConfigMesageConstant.MESSAGE_CHANGE_GRADE_SUCCESS_MODAL);
-          this.loadData();
+  nextLevel(data: any) {
+    const diemData = (data.diemLopSauHK1VM.diemTrungBinhCong + data.diemLopSauHK2VM.diemTrungBinhCong) / 2;
+    console.log(diemData);
+    if (diemData > 4) {
+      const listChangeStudent = [data.id];
+      const modal = this.modalService.create({
+        nzTitle: 'Lên lớp',
+        nzContent: NextLevelStudentComponent,
+        nzWidth: 450,
+        nzComponentParams: {
+          levelEnum: data.gradeVM.levelEnum,
+          studentsId: listChangeStudent
         }
-      }
-    );
+      });
+
+      modal.afterClose.subscribe(
+        (result: boolean) => {
+          if (result) {
+            this.notifyService.success(ConfigMesageConstant.MESSAGE_CHANGE_GRADE_SUCCESS_MODAL);
+            this.loadData();
+          }
+        }
+      );
+    } else {
+      this.notifyService.error("Không đủ điểm lên lớp");
+    }
   }
 }
+

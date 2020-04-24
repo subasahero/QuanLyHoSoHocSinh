@@ -12,5 +12,5 @@ export interface DetailDiscipline {
     modifiedDate?: string;
     status?: boolean;
     studentVM?: Student;
-    disciplineVM?: Discipline;
+    discipline?: any;
 }

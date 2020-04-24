@@ -1,0 +1,163 @@
+<nz-spin [nzSpinning]="isSpinning">
+  <nz-tabset *ngIf="studentData">
+    <nz-tab nzTitle="Thông tin cá nhân">
+      <nz-descriptions nzTitle="Thông tin học sinh" nzBordered>
+        <nz-descriptions-item nzTitle="Ảnh" [nzSpan]="4">
+          <ng-container *ngIf="imageLinkStudent">
+            <img [src]="imageLinkStudent" alt="Ảnh hồ sơ" style="width: 80px;height: auto;">
+          </ng-container>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Mã" [nzSpan]="4">{{studentData?.code}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Họ và tên" [nzSpan]="4">{{studentData?.name}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Ngày nhập học" [nzSpan]="4">
+          {{studentData?.dateGoShcool | date: 'dd/MM/yyyy'}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Ngày sinh" [nzSpan]="4">
+          {{studentData?.birthday | date: 'dd/MM/yyyy'}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Giới tính" [nzSpan]="4">
+          {{studentData?.sex}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Nơi sinh" [nzSpan]="4">
+          {{studentData?.birthLocate}}
+        </nz-descriptions-item>
+      </nz-descriptions>
+    </nz-tab>
+    <nz-tab nzTitle="Hồ sơ điểm">
+      <nz-descriptions nzTitle="Điểm trung bình cộng" nzBordered>
+        <nz-descriptions-item nzTitle="TBC lớp 6 HK I" [nzSpan]="2">{{studentData?.diemLopSauHK1VM?.diemTrungBinhCong}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Chi tiết" [nzSpan]="2">
+          <ng-container *ngIf="studentData?.diemLopSauHK1VM">
+            <button nz-button nzType="default" nz-tooltip nzTitle="Xem" (click)="view61(studentData)">
+              <i nz-icon nzType="eye" theme="outline"></i>
+            </button>
+          </ng-container>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="TBC lớp 6 HK II" [nzSpan]="2">{{studentData?.diemLopSauHK2VM?.diemTrungBinhCong}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Chi tiết" [nzSpan]="2">
+          <ng-container *ngIf="studentData?.diemLopSauHK2VM">
+            <button nz-button nzType="default" nz-tooltip nzTitle="Xem" (click)="view62(studentData)">
+              <i nz-icon nzType="eye" theme="outline"></i>
+            </button>
+          </ng-container>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="TBC lớp 6" [nzSpan]="4">
+          {{(studentData?.diemLopSauHK1VM?.diemTrungBinhCong + studentData?.diemLopSauHK2VM?.diemTrungBinhCong) / 2}}
+        </nz-descriptions-item>
+        <!-- diem lop 7 -->
+        <nz-descriptions-item nzTitle="TBC lớp 7 HK I" [nzSpan]="2">{{studentData?.diemLopBayHK1VM?.diemTrungBinhCong}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Chi tiết" [nzSpan]="2">
+          <ng-container *ngIf="studentData?.diemLopBayHK1VM">
+            <button nz-button nzType="default" nz-tooltip nzTitle="Xem" (click)="view71(studentData)">
+              <i nz-icon nzType="eye" theme="outline"></i>
+            </button>
+          </ng-container>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="TBC lớp 7 HK II" [nzSpan]="2">{{studentData?.diemLopBayHK2VM?.diemTrungBinhCong}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Chi tiết" [nzSpan]="2">
+          <ng-container *ngIf="studentData?.diemLopBayHK2VM">
+            <button nz-button nzType="default" nz-tooltip nzTitle="Xem" (click)="view72(studentData)">
+              <i nz-icon nzType="eye" theme="outline"></i>
+            </button>
+          </ng-container>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="TBC lớp 7" [nzSpan]="4">
+          {{(studentData?.diemLopBayHK1VM?.diemTrungBinhCong + studentData?.diemLopBayHK2VM?.diemTrungBinhCong) / 2}}
+        </nz-descriptions-item>
+      <!-- diem lop 8 -->
+      <nz-descriptions-item nzTitle="TBC lớp 8 HK I" [nzSpan]="2">{{studentData?.diemLopTamHK1VM?.diemTrungBinhCong}}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Chi tiết" [nzSpan]="2">
+        <ng-container *ngIf="studentData?.diemLopTamHK1VM">
+          <button nz-button nzType="default" nz-tooltip nzTitle="Xem" (click)="view81(studentData)">
+            <i nz-icon nzType="eye" theme="outline"></i>
+          </button>
+        </ng-container>
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="TBC lớp 8 HK II" [nzSpan]="2">{{studentData?.diemLopTamHK2VM?.diemTrungBinhCong}}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Chi tiết" [nzSpan]="2">
+        <ng-container *ngIf="studentData?.diemLopTamHK2VM">
+          <button nz-button nzType="default" nz-tooltip nzTitle="Xem" (click)="view82(studentData)">
+            <i nz-icon nzType="eye" theme="outline"></i>
+          </button>
+        </ng-container>
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="TBC lớp 8" [nzSpan]="4">
+        {{(studentData?.diemLopTamHK1VM?.diemTrungBinhCong + studentData?.diemLopTamHK2VM?.diemTrungBinhCong) / 2}}
+      </nz-descriptions-item>
+      <!-- diem lop 9 -->
+      <nz-descriptions-item nzTitle="TBC lớp 9 HK I" [nzSpan]="2">{{studentData?.diemLopChinHK1VM?.diemTrungBinhCong}}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Chi tiết" [nzSpan]="2">
+        <ng-container *ngIf="studentData?.diemLopChinHK1VM">
+          <button nz-button nzType="default" nz-tooltip nzTitle="Xem" (click)="view91(studentData)">
+            <i nz-icon nzType="eye" theme="outline"></i>
+          </button>
+        </ng-container>
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="TBC lớp 9 HK II" [nzSpan]="2">{{studentData?.diemLopChinHK2VM?.diemTrungBinhCong}}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Chi tiết" [nzSpan]="2">
+        <ng-container *ngIf="studentData?.diemLopChinHK2VM">
+          <button nz-button nzType="default" nz-tooltip nzTitle="Xem" (click)="view92(studentData)">
+            <i nz-icon nzType="eye" theme="outline"></i>
+          </button>
+        </ng-container>
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="TBC lớp 9" [nzSpan]="4">
+        {{(studentData?.diemLopChinHK1VM?.diemTrungBinhCong + studentData?.diemLopChinHK2VM?.diemTrungBinhCong) / 2}}
+      </nz-descriptions-item>
+    </nz-descriptions>
+    </nz-tab>
+    <ng-container *ngIf="studentData.detailRewardVM.length > 0">
+      <nz-tab nzTitle="Khen thưởng">
+        <nz-table #reWardTable nzBordered [nzData]="studentData.detailRewardVM" [nzLoading]="loading">
+          <thead>
+            <tr>
+              <th nzWidth="10%">KT số</th>
+              <th>Lý do KT</th>
+              <th>Ngày nhận thưởng</th>
+              <th>Phần thưởng</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of studentData.detailRewardVM;let i = index">
+              <td>{{ data?.reward?.number}}</td>
+              <td>{{data?.reward?.description}}</td>
+              <td>{{data?.dateReward | date: 'dd/MM/yyyy'}}</td>
+              <td>{{data?.gift}}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-tab>
+    </ng-container>
+    <ng-container *ngIf="studentData.detailDisciplineVM.length > 0">
+      <nz-tab nzTitle="Kỷ luật">
+        <nz-table #reWardTable nzBordered [nzData]="studentData.detailDisciplineVM" [nzLoading]="loading">
+          <thead>
+            <tr>
+              <th nzWidth="10%">KL số</th>
+              <th>Lý do KL</th>
+              <th>Ngày kỷ luật</th>
+              <th>Hình phạt</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of studentData.detailDisciplineVM;let i = index">
+              <td>{{ data?.discipline?.number}}</td>
+              <td>{{data?.discipline?.description}}</td>
+              <td>{{data?.datePunish | date: 'dd/MM/yyyy'}}</td>
+              <td>{{data?.punishment}}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-tab>
+    </ng-container>
+
+  </nz-tabset>
+</nz-spin>

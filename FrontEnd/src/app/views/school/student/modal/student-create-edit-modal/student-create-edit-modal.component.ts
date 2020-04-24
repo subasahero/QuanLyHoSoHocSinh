@@ -80,7 +80,7 @@ export class StudentCreateEditModalComponent implements OnInit {
     this.formData.append('dateGoShcool', student.dateGoShcool);
     this.formData.append('createdDate', student.createdDate);
     this.formData.append('modifiedDate', student.modifiedDate);
-    this.formData.append('status', '' + student.status);
+    this.formData.append('status', 'true');
     if (this.isAddNew) {
       // tslint:disable-next-line: no-shadowed-variable
       this.studentService.addNew(this.formData).subscribe((res: any) => {

@@ -12,5 +12,5 @@ export interface DetailReward {
     modifiedDate?: string;
     status?: boolean;
     studentVM: Student;
-    rewardVM: Reward;
+    reward: any;
 }

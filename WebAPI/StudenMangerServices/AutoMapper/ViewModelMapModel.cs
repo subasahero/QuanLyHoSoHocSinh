@@ -52,6 +52,12 @@ namespace StudenMangerServices.AutoMapper
             CreateMap<UserSessionViewModel, User>();
             CreateMap<UserUpdationViewModel, User>();
             CreateMap<CertificateViewModel, Certificate>();
+
+            CreateMap<DiemLopSauViewModel, DiemLopSau>();
+            CreateMap<DiemLopBayViewModel, DiemLopBay>();
+            CreateMap<DiemLopTamViewModel, DiemLopTam>();
+            CreateMap<DiemLopChinViewModel, DiemLopChin>();
+            CreateMap<UserCreationViewModel, User>();
             //CreateMap<UserCreationViewModel, User>();
         }
     }
